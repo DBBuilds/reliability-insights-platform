@@ -1,0 +1,116 @@
+type AlertCount {
+  alertName: String!
+  pages: Int!
+}
+
+"""Date (isoformat)"""
+scalar Date
+
+type DeliveryMetrics {
+  deploys: Int!
+
+  """0..1, null with no deploys."""
+  changeFailureRate: Float
+}
+
+"""Minutes. Null statistics mean too few samples; see sampleSize."""
+type DurationStat {
+  sampleSize: Int!
+  medianMinutes: Float
+  p90Minutes: Float
+}
+
+type IncidentMetrics {
+  total: Int!
+  open: Int!
+  bySeverity: [SeverityCount!]!
+  timeToDetect: DurationStat
+  timeToResolve: DurationStat
+  weekly: [WeeklyCount!]!
+}
+
+type Insight {
+  id: ID!
+  level: InsightLevel!
+  title: String!
+  detail: String
+}
+
+"""How urgent an insight is."""
+enum InsightLevel {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+type OnCallMetrics {
+  pages: Int!
+  offHoursPages: Int!
+
+  """0..1 among pages a responder marked."""
+  actionableShare: Float
+  noisiestAlerts: [AlertCount!]!
+}
+
+type Org {
+  id: ID!
+  name: String!
+  parentId: ID
+}
+
+type OrgMetrics {
+  orgId: ID!
+  start: Date!
+  end: Date!
+
+  """
+  Streams with no recent successful sync. Treat their numbers as suspect.
+  """
+  staleSources: [String!]!
+  incidents: IncidentMetrics
+  delivery: DeliveryMetrics
+  onCall: OnCallMetrics
+  support: SupportMetrics
+  insights: [Insight!]!
+}
+
+type Query {
+  """Orgs the caller can see."""
+  orgs: [Org!]!
+
+  """
+  Metrics for one org over a fixed window [start, end). Null if the org is unknown.
+  """
+  orgMetrics(orgId: ID!, start: Date!, end: Date!): OrgMetrics
+}
+
+type SeverityCount {
+  severity: SeverityLevel!
+  count: Int!
+}
+
+enum SeverityLevel {
+  SEV1
+  SEV2
+  SEV3
+  SEV4
+}
+
+type SupportMetrics {
+  requests: Int!
+
+  """To the first human reply. Bots excluded."""
+  firstResponse: DurationStat
+
+  """0..1. Depends on threads being closed consistently."""
+  resolutionRate: Float
+}
+
+"""
+Count for an ISO week starting Monday. Partial weeks understate; compare complete weeks.
+"""
+type WeeklyCount {
+  weekStart: Date!
+  count: Int!
+  partial: Boolean!
+}

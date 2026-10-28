@@ -1,0 +1,3180 @@
+{
+ "_comment": "Synthetic demo data. 'search' has a stale support sync on purpose.",
+ "orgs": [
+  {
+   "id": "payments",
+   "name": "Payments",
+   "parent_id": "eng"
+  },
+  {
+   "id": "search",
+   "name": "Search",
+   "parent_id": "eng"
+  },
+  {
+   "id": "eng",
+   "name": "Engineering",
+   "parent_id": null
+  }
+ ],
+ "incidents": [
+  {
+   "id": "payments-i0",
+   "org_id": "payments",
+   "severity": "SEV2",
+   "started_at": "2026-09-30T23:39:00+00:00",
+   "detected_at": "2026-10-01T00:18:00+00:00",
+   "resolved_at": "2026-10-01T02:00:00+00:00",
+   "caused_by_deploy_id": "payments-d68"
+  },
+  {
+   "id": "payments-i1",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-10-08T08:48:00+00:00",
+   "detected_at": "2026-10-08T08:59:00+00:00",
+   "resolved_at": "2026-10-08T13:10:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "payments-i2",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-09-06T12:55:00+00:00",
+   "detected_at": "2026-09-06T13:31:00+00:00",
+   "resolved_at": "2026-09-06T15:38:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "payments-i3",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-10-04T07:33:00+00:00",
+   "detected_at": "2026-10-04T07:37:00+00:00",
+   "resolved_at": "2026-10-04T09:49:00+00:00",
+   "caused_by_deploy_id": "payments-d4"
+  },
+  {
+   "id": "payments-i4",
+   "org_id": "payments",
+   "severity": "SEV4",
+   "started_at": "2026-08-31T17:07:00+00:00",
+   "detected_at": "2026-08-31T17:25:00+00:00",
+   "resolved_at": "2026-08-31T18:13:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "payments-i5",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-08-22T04:53:00+00:00",
+   "detected_at": "2026-08-22T05:14:00+00:00",
+   "resolved_at": "2026-08-22T07:17:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "payments-i6",
+   "org_id": "payments",
+   "severity": "SEV4",
+   "started_at": "2026-10-01T15:49:00+00:00",
+   "detected_at": "2026-10-01T16:15:00+00:00",
+   "resolved_at": "2026-10-01T20:24:00+00:00",
+   "caused_by_deploy_id": "payments-d18"
+  },
+  {
+   "id": "payments-i7",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-08-27T02:38:00+00:00",
+   "detected_at": "2026-08-27T02:54:00+00:00",
+   "resolved_at": "2026-08-27T07:44:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "payments-i8",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-08-26T21:58:00+00:00",
+   "detected_at": "2026-08-26T22:26:00+00:00",
+   "resolved_at": "2026-08-27T02:05:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "payments-i9",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-09-04T22:47:00+00:00",
+   "detected_at": "2026-09-04T22:56:00+00:00",
+   "resolved_at": "2026-09-05T03:31:00+00:00",
+   "caused_by_deploy_id": "payments-d63"
+  },
+  {
+   "id": "payments-i10",
+   "org_id": "payments",
+   "severity": "SEV2",
+   "started_at": "2026-08-11T06:35:00+00:00",
+   "detected_at": "2026-08-11T06:43:00+00:00",
+   "resolved_at": "2026-08-11T08:16:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "payments-i11",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-09-29T02:40:00+00:00",
+   "detected_at": "2026-09-29T03:08:00+00:00",
+   "resolved_at": "2026-09-29T03:55:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "payments-i12",
+   "org_id": "payments",
+   "severity": "SEV4",
+   "started_at": "2026-09-07T00:32:00+00:00",
+   "detected_at": "2026-09-07T01:11:00+00:00",
+   "resolved_at": "2026-09-07T05:25:00+00:00",
+   "caused_by_deploy_id": "payments-d67"
+  },
+  {
+   "id": "payments-i13",
+   "org_id": "payments",
+   "severity": "SEV3",
+   "started_at": "2026-08-25T21:13:00+00:00",
+   "detected_at": "2026-08-25T21:14:00+00:00",
+   "resolved_at": null,
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "search-i0",
+   "org_id": "search",
+   "severity": "SEV3",
+   "started_at": "2026-09-13T21:32:00+00:00",
+   "detected_at": "2026-09-13T21:52:00+00:00",
+   "resolved_at": "2026-09-14T00:03:00+00:00",
+   "caused_by_deploy_id": "search-d57"
+  },
+  {
+   "id": "search-i1",
+   "org_id": "search",
+   "severity": "SEV3",
+   "started_at": "2026-08-05T03:41:00+00:00",
+   "detected_at": "2026-08-05T04:07:00+00:00",
+   "resolved_at": "2026-08-05T07:10:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "search-i2",
+   "org_id": "search",
+   "severity": "SEV2",
+   "started_at": "2026-08-28T08:37:00+00:00",
+   "detected_at": "2026-08-28T08:55:00+00:00",
+   "resolved_at": "2026-08-28T12:09:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "search-i3",
+   "org_id": "search",
+   "severity": "SEV3",
+   "started_at": "2026-09-30T09:20:00+00:00",
+   "detected_at": "2026-09-30T09:46:00+00:00",
+   "resolved_at": "2026-09-30T14:35:00+00:00",
+   "caused_by_deploy_id": "search-d84"
+  },
+  {
+   "id": "search-i4",
+   "org_id": "search",
+   "severity": "SEV2",
+   "started_at": "2026-08-05T12:17:00+00:00",
+   "detected_at": "2026-08-05T12:34:00+00:00",
+   "resolved_at": "2026-08-05T14:20:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "search-i5",
+   "org_id": "search",
+   "severity": "SEV3",
+   "started_at": "2026-09-24T20:19:00+00:00",
+   "detected_at": "2026-09-24T20:22:00+00:00",
+   "resolved_at": "2026-09-24T21:32:00+00:00",
+   "caused_by_deploy_id": null
+  },
+  {
+   "id": "search-i6",
+   "org_id": "search",
+   "severity": "SEV4",
+   "started_at": "2026-09-26T07:13:00+00:00",
+   "detected_at": "2026-09-26T07:36:00+00:00",
+   "resolved_at": "2026-09-26T10:31:00+00:00",
+   "caused_by_deploy_id": "search-d111"
+  },
+  {
+   "id": "search-i7",
+   "org_id": "search",
+   "severity": "SEV3",
+   "started_at": "2026-09-27T04:17:00+00:00",
+   "detected_at": "2026-09-27T04:25:00+00:00",
+   "resolved_at": null,
+   "caused_by_deploy_id": null
+  }
+ ],
+ "deploys": [
+  {
+   "id": "payments-d0",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-30T04:50:00+00:00"
+  },
+  {
+   "id": "payments-d1",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-13T03:12:00+00:00"
+  },
+  {
+   "id": "payments-d2",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-05T06:38:00+00:00"
+  },
+  {
+   "id": "payments-d3",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-09T11:56:00+00:00"
+  },
+  {
+   "id": "payments-d4",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-28T00:48:00+00:00"
+  },
+  {
+   "id": "payments-d5",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-25T06:58:00+00:00"
+  },
+  {
+   "id": "payments-d6",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-23T07:36:00+00:00"
+  },
+  {
+   "id": "payments-d7",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-15T16:49:00+00:00"
+  },
+  {
+   "id": "payments-d8",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-09T00:50:00+00:00"
+  },
+  {
+   "id": "payments-d9",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-12T07:54:00+00:00"
+  },
+  {
+   "id": "payments-d10",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-03T14:16:00+00:00"
+  },
+  {
+   "id": "payments-d11",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-09T10:00:00+00:00"
+  },
+  {
+   "id": "payments-d12",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-21T15:22:00+00:00"
+  },
+  {
+   "id": "payments-d13",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-10T21:55:00+00:00"
+  },
+  {
+   "id": "payments-d14",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-25T17:57:00+00:00"
+  },
+  {
+   "id": "payments-d15",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-10T09:42:00+00:00"
+  },
+  {
+   "id": "payments-d16",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-05T21:25:00+00:00"
+  },
+  {
+   "id": "payments-d17",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-05T17:05:00+00:00"
+  },
+  {
+   "id": "payments-d18",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-11T12:40:00+00:00"
+  },
+  {
+   "id": "payments-d19",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-22T21:37:00+00:00"
+  },
+  {
+   "id": "payments-d20",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-24T04:15:00+00:00"
+  },
+  {
+   "id": "payments-d21",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-17T23:57:00+00:00"
+  },
+  {
+   "id": "payments-d22",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-26T19:07:00+00:00"
+  },
+  {
+   "id": "payments-d23",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-05T09:58:00+00:00"
+  },
+  {
+   "id": "payments-d24",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-23T02:03:00+00:00"
+  },
+  {
+   "id": "payments-d25",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-21T02:22:00+00:00"
+  },
+  {
+   "id": "payments-d26",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-07T04:10:00+00:00"
+  },
+  {
+   "id": "payments-d27",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-01T03:41:00+00:00"
+  },
+  {
+   "id": "payments-d28",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-05T20:04:00+00:00"
+  },
+  {
+   "id": "payments-d29",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-21T14:26:00+00:00"
+  },
+  {
+   "id": "payments-d30",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-10T04:27:00+00:00"
+  },
+  {
+   "id": "payments-d31",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-23T01:33:00+00:00"
+  },
+  {
+   "id": "payments-d32",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-12T21:18:00+00:00"
+  },
+  {
+   "id": "payments-d33",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-25T15:16:00+00:00"
+  },
+  {
+   "id": "payments-d34",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-28T07:43:00+00:00"
+  },
+  {
+   "id": "payments-d35",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-03T14:11:00+00:00"
+  },
+  {
+   "id": "payments-d36",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-11T01:38:00+00:00"
+  },
+  {
+   "id": "payments-d37",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-17T12:46:00+00:00"
+  },
+  {
+   "id": "payments-d38",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-05T13:06:00+00:00"
+  },
+  {
+   "id": "payments-d39",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-10T11:12:00+00:00"
+  },
+  {
+   "id": "payments-d40",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-02T23:17:00+00:00"
+  },
+  {
+   "id": "payments-d41",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-28T07:01:00+00:00"
+  },
+  {
+   "id": "payments-d42",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-17T03:39:00+00:00"
+  },
+  {
+   "id": "payments-d43",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-22T14:21:00+00:00"
+  },
+  {
+   "id": "payments-d44",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-11T11:52:00+00:00"
+  },
+  {
+   "id": "payments-d45",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-02T15:18:00+00:00"
+  },
+  {
+   "id": "payments-d46",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-12T07:16:00+00:00"
+  },
+  {
+   "id": "payments-d47",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-11T10:36:00+00:00"
+  },
+  {
+   "id": "payments-d48",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-06T13:57:00+00:00"
+  },
+  {
+   "id": "payments-d49",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-11T19:16:00+00:00"
+  },
+  {
+   "id": "payments-d50",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-04T16:12:00+00:00"
+  },
+  {
+   "id": "payments-d51",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-03T07:22:00+00:00"
+  },
+  {
+   "id": "payments-d52",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-26T22:51:00+00:00"
+  },
+  {
+   "id": "payments-d53",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-27T01:51:00+00:00"
+  },
+  {
+   "id": "payments-d54",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-06T22:55:00+00:00"
+  },
+  {
+   "id": "payments-d55",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-08T10:07:00+00:00"
+  },
+  {
+   "id": "payments-d56",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-13T19:37:00+00:00"
+  },
+  {
+   "id": "payments-d57",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-20T19:24:00+00:00"
+  },
+  {
+   "id": "payments-d58",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-14T08:41:00+00:00"
+  },
+  {
+   "id": "payments-d59",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-06T10:55:00+00:00"
+  },
+  {
+   "id": "payments-d60",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-10T04:08:00+00:00"
+  },
+  {
+   "id": "payments-d61",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-22T05:57:00+00:00"
+  },
+  {
+   "id": "payments-d62",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-29T16:27:00+00:00"
+  },
+  {
+   "id": "payments-d63",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-29T05:17:00+00:00"
+  },
+  {
+   "id": "payments-d64",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-28T07:10:00+00:00"
+  },
+  {
+   "id": "payments-d65",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-04T22:00:00+00:00"
+  },
+  {
+   "id": "payments-d66",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-24T13:14:00+00:00"
+  },
+  {
+   "id": "payments-d67",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-20T12:03:00+00:00"
+  },
+  {
+   "id": "payments-d68",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-06T03:09:00+00:00"
+  },
+  {
+   "id": "payments-d69",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-09T07:56:00+00:00"
+  },
+  {
+   "id": "payments-d70",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-07T04:06:00+00:00"
+  },
+  {
+   "id": "payments-d71",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-02T04:33:00+00:00"
+  },
+  {
+   "id": "payments-d72",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-23T17:51:00+00:00"
+  },
+  {
+   "id": "payments-d73",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-29T08:10:00+00:00"
+  },
+  {
+   "id": "payments-d74",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-10T06:18:00+00:00"
+  },
+  {
+   "id": "payments-d75",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-24T04:32:00+00:00"
+  },
+  {
+   "id": "payments-d76",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-12T04:38:00+00:00"
+  },
+  {
+   "id": "payments-d77",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-06T14:23:00+00:00"
+  },
+  {
+   "id": "payments-d78",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-28T07:14:00+00:00"
+  },
+  {
+   "id": "payments-d79",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-13T06:29:00+00:00"
+  },
+  {
+   "id": "payments-d80",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-29T20:40:00+00:00"
+  },
+  {
+   "id": "payments-d81",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-05T04:59:00+00:00"
+  },
+  {
+   "id": "payments-d82",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-17T19:19:00+00:00"
+  },
+  {
+   "id": "payments-d83",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-05T16:40:00+00:00"
+  },
+  {
+   "id": "payments-d84",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-09-04T08:06:00+00:00"
+  },
+  {
+   "id": "payments-d85",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-22T01:40:00+00:00"
+  },
+  {
+   "id": "payments-d86",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-03T00:01:00+00:00"
+  },
+  {
+   "id": "payments-d87",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-08-27T07:13:00+00:00"
+  },
+  {
+   "id": "payments-d88",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-05T21:08:00+00:00"
+  },
+  {
+   "id": "payments-d89",
+   "org_id": "payments",
+   "service": "payments-api",
+   "deployed_at": "2026-10-04T05:13:00+00:00"
+  },
+  {
+   "id": "search-d0",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-10T03:48:00+00:00"
+  },
+  {
+   "id": "search-d1",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-01T20:03:00+00:00"
+  },
+  {
+   "id": "search-d2",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-25T03:03:00+00:00"
+  },
+  {
+   "id": "search-d3",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-23T10:45:00+00:00"
+  },
+  {
+   "id": "search-d4",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-19T14:02:00+00:00"
+  },
+  {
+   "id": "search-d5",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-31T19:07:00+00:00"
+  },
+  {
+   "id": "search-d6",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-26T17:39:00+00:00"
+  },
+  {
+   "id": "search-d7",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-21T14:12:00+00:00"
+  },
+  {
+   "id": "search-d8",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-02T23:02:00+00:00"
+  },
+  {
+   "id": "search-d9",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-07T04:32:00+00:00"
+  },
+  {
+   "id": "search-d10",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-31T14:20:00+00:00"
+  },
+  {
+   "id": "search-d11",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-24T17:25:00+00:00"
+  },
+  {
+   "id": "search-d12",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-27T04:14:00+00:00"
+  },
+  {
+   "id": "search-d13",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-08T00:36:00+00:00"
+  },
+  {
+   "id": "search-d14",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-14T21:54:00+00:00"
+  },
+  {
+   "id": "search-d15",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-03T03:19:00+00:00"
+  },
+  {
+   "id": "search-d16",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-30T18:07:00+00:00"
+  },
+  {
+   "id": "search-d17",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-30T07:21:00+00:00"
+  },
+  {
+   "id": "search-d18",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-13T14:49:00+00:00"
+  },
+  {
+   "id": "search-d19",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-31T18:41:00+00:00"
+  },
+  {
+   "id": "search-d20",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-10T10:28:00+00:00"
+  },
+  {
+   "id": "search-d21",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-09T14:28:00+00:00"
+  },
+  {
+   "id": "search-d22",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-03T20:20:00+00:00"
+  },
+  {
+   "id": "search-d23",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-13T17:08:00+00:00"
+  },
+  {
+   "id": "search-d24",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-28T12:56:00+00:00"
+  },
+  {
+   "id": "search-d25",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-23T05:52:00+00:00"
+  },
+  {
+   "id": "search-d26",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-12T02:24:00+00:00"
+  },
+  {
+   "id": "search-d27",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-09T16:02:00+00:00"
+  },
+  {
+   "id": "search-d28",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-20T22:28:00+00:00"
+  },
+  {
+   "id": "search-d29",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-22T09:38:00+00:00"
+  },
+  {
+   "id": "search-d30",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-18T01:07:00+00:00"
+  },
+  {
+   "id": "search-d31",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-27T03:20:00+00:00"
+  },
+  {
+   "id": "search-d32",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-15T01:21:00+00:00"
+  },
+  {
+   "id": "search-d33",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-03T18:25:00+00:00"
+  },
+  {
+   "id": "search-d34",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-09T06:16:00+00:00"
+  },
+  {
+   "id": "search-d35",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-25T05:38:00+00:00"
+  },
+  {
+   "id": "search-d36",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-05T15:14:00+00:00"
+  },
+  {
+   "id": "search-d37",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-28T22:33:00+00:00"
+  },
+  {
+   "id": "search-d38",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-17T08:36:00+00:00"
+  },
+  {
+   "id": "search-d39",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-11T21:13:00+00:00"
+  },
+  {
+   "id": "search-d40",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-21T10:40:00+00:00"
+  },
+  {
+   "id": "search-d41",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-06T00:54:00+00:00"
+  },
+  {
+   "id": "search-d42",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-30T12:51:00+00:00"
+  },
+  {
+   "id": "search-d43",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-27T16:13:00+00:00"
+  },
+  {
+   "id": "search-d44",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-01T12:37:00+00:00"
+  },
+  {
+   "id": "search-d45",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-20T03:29:00+00:00"
+  },
+  {
+   "id": "search-d46",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-03T17:05:00+00:00"
+  },
+  {
+   "id": "search-d47",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-02T18:58:00+00:00"
+  },
+  {
+   "id": "search-d48",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-22T11:32:00+00:00"
+  },
+  {
+   "id": "search-d49",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-30T06:00:00+00:00"
+  },
+  {
+   "id": "search-d50",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-02T09:11:00+00:00"
+  },
+  {
+   "id": "search-d51",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-12T10:17:00+00:00"
+  },
+  {
+   "id": "search-d52",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-15T05:21:00+00:00"
+  },
+  {
+   "id": "search-d53",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-27T01:44:00+00:00"
+  },
+  {
+   "id": "search-d54",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-13T12:09:00+00:00"
+  },
+  {
+   "id": "search-d55",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-12T17:49:00+00:00"
+  },
+  {
+   "id": "search-d56",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-09T13:50:00+00:00"
+  },
+  {
+   "id": "search-d57",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-22T08:32:00+00:00"
+  },
+  {
+   "id": "search-d58",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-17T03:34:00+00:00"
+  },
+  {
+   "id": "search-d59",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-27T18:57:00+00:00"
+  },
+  {
+   "id": "search-d60",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-28T15:30:00+00:00"
+  },
+  {
+   "id": "search-d61",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-27T01:16:00+00:00"
+  },
+  {
+   "id": "search-d62",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-22T04:07:00+00:00"
+  },
+  {
+   "id": "search-d63",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-07T07:38:00+00:00"
+  },
+  {
+   "id": "search-d64",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-03T05:02:00+00:00"
+  },
+  {
+   "id": "search-d65",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-21T12:45:00+00:00"
+  },
+  {
+   "id": "search-d66",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-04T13:51:00+00:00"
+  },
+  {
+   "id": "search-d67",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-29T17:30:00+00:00"
+  },
+  {
+   "id": "search-d68",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-27T00:40:00+00:00"
+  },
+  {
+   "id": "search-d69",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-18T00:04:00+00:00"
+  },
+  {
+   "id": "search-d70",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-16T11:12:00+00:00"
+  },
+  {
+   "id": "search-d71",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-25T20:34:00+00:00"
+  },
+  {
+   "id": "search-d72",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-07T14:58:00+00:00"
+  },
+  {
+   "id": "search-d73",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-11T09:37:00+00:00"
+  },
+  {
+   "id": "search-d74",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-29T17:36:00+00:00"
+  },
+  {
+   "id": "search-d75",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-10T13:18:00+00:00"
+  },
+  {
+   "id": "search-d76",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-28T04:25:00+00:00"
+  },
+  {
+   "id": "search-d77",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-07T00:18:00+00:00"
+  },
+  {
+   "id": "search-d78",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-03T07:44:00+00:00"
+  },
+  {
+   "id": "search-d79",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-02T08:39:00+00:00"
+  },
+  {
+   "id": "search-d80",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-14T21:46:00+00:00"
+  },
+  {
+   "id": "search-d81",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-29T23:47:00+00:00"
+  },
+  {
+   "id": "search-d82",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-26T20:15:00+00:00"
+  },
+  {
+   "id": "search-d83",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-17T16:58:00+00:00"
+  },
+  {
+   "id": "search-d84",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-09T11:14:00+00:00"
+  },
+  {
+   "id": "search-d85",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-12T05:12:00+00:00"
+  },
+  {
+   "id": "search-d86",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-22T05:09:00+00:00"
+  },
+  {
+   "id": "search-d87",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-06T05:33:00+00:00"
+  },
+  {
+   "id": "search-d88",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-10T22:17:00+00:00"
+  },
+  {
+   "id": "search-d89",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-23T01:19:00+00:00"
+  },
+  {
+   "id": "search-d90",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-03T21:07:00+00:00"
+  },
+  {
+   "id": "search-d91",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-13T04:23:00+00:00"
+  },
+  {
+   "id": "search-d92",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-09T20:22:00+00:00"
+  },
+  {
+   "id": "search-d93",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-04T21:33:00+00:00"
+  },
+  {
+   "id": "search-d94",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-16T13:36:00+00:00"
+  },
+  {
+   "id": "search-d95",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-21T15:51:00+00:00"
+  },
+  {
+   "id": "search-d96",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-06T06:42:00+00:00"
+  },
+  {
+   "id": "search-d97",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-05T14:33:00+00:00"
+  },
+  {
+   "id": "search-d98",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-25T00:30:00+00:00"
+  },
+  {
+   "id": "search-d99",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-22T07:00:00+00:00"
+  },
+  {
+   "id": "search-d100",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-16T11:30:00+00:00"
+  },
+  {
+   "id": "search-d101",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-11T02:53:00+00:00"
+  },
+  {
+   "id": "search-d102",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-14T14:24:00+00:00"
+  },
+  {
+   "id": "search-d103",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-06T19:22:00+00:00"
+  },
+  {
+   "id": "search-d104",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-31T01:24:00+00:00"
+  },
+  {
+   "id": "search-d105",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-05T04:35:00+00:00"
+  },
+  {
+   "id": "search-d106",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-06T15:09:00+00:00"
+  },
+  {
+   "id": "search-d107",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-04T13:38:00+00:00"
+  },
+  {
+   "id": "search-d108",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-22T02:55:00+00:00"
+  },
+  {
+   "id": "search-d109",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-04T01:59:00+00:00"
+  },
+  {
+   "id": "search-d110",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-25T17:06:00+00:00"
+  },
+  {
+   "id": "search-d111",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-02T16:56:00+00:00"
+  },
+  {
+   "id": "search-d112",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-12T08:33:00+00:00"
+  },
+  {
+   "id": "search-d113",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-04T04:37:00+00:00"
+  },
+  {
+   "id": "search-d114",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-22T23:05:00+00:00"
+  },
+  {
+   "id": "search-d115",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-08T23:44:00+00:00"
+  },
+  {
+   "id": "search-d116",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-28T11:51:00+00:00"
+  },
+  {
+   "id": "search-d117",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-10T05:15:00+00:00"
+  },
+  {
+   "id": "search-d118",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-17T01:37:00+00:00"
+  },
+  {
+   "id": "search-d119",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-24T13:09:00+00:00"
+  },
+  {
+   "id": "search-d120",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-17T18:59:00+00:00"
+  },
+  {
+   "id": "search-d121",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-19T02:46:00+00:00"
+  },
+  {
+   "id": "search-d122",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-09T12:40:00+00:00"
+  },
+  {
+   "id": "search-d123",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-05T06:08:00+00:00"
+  },
+  {
+   "id": "search-d124",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-19T07:49:00+00:00"
+  },
+  {
+   "id": "search-d125",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-09T01:02:00+00:00"
+  },
+  {
+   "id": "search-d126",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-02T05:40:00+00:00"
+  },
+  {
+   "id": "search-d127",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-09T11:24:00+00:00"
+  },
+  {
+   "id": "search-d128",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-02T23:26:00+00:00"
+  },
+  {
+   "id": "search-d129",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-08T21:45:00+00:00"
+  },
+  {
+   "id": "search-d130",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-25T14:07:00+00:00"
+  },
+  {
+   "id": "search-d131",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-27T06:50:00+00:00"
+  },
+  {
+   "id": "search-d132",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-17T11:46:00+00:00"
+  },
+  {
+   "id": "search-d133",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-10-05T19:57:00+00:00"
+  },
+  {
+   "id": "search-d134",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-12T20:08:00+00:00"
+  },
+  {
+   "id": "search-d135",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-06T19:40:00+00:00"
+  },
+  {
+   "id": "search-d136",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-06T12:35:00+00:00"
+  },
+  {
+   "id": "search-d137",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-09-14T20:14:00+00:00"
+  },
+  {
+   "id": "search-d138",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-23T05:54:00+00:00"
+  },
+  {
+   "id": "search-d139",
+   "org_id": "search",
+   "service": "search-api",
+   "deployed_at": "2026-08-21T03:58:00+00:00"
+  }
+ ],
+ "pages": [
+  {
+   "id": "payments-p0",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-10-03T22:06:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p1",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-10-07T14:26:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p2",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-10-04T01:13:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p3",
+   "org_id": "payments",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-09-20T21:01:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p4",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-10-11T23:01:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p5",
+   "org_id": "payments",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-09-30T08:12:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p6",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-13T03:41:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p7",
+   "org_id": "payments",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-08-29T17:09:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p8",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-17T09:30:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p9",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-09-13T07:10:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p10",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-10-07T17:26:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p11",
+   "org_id": "payments",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-10-07T12:09:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p12",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-17T13:32:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p13",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-10-11T08:31:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p14",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-18T05:02:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p15",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-12T16:27:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p16",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-30T03:57:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p17",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-09-30T03:48:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p18",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-27T10:18:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p19",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-08-21T02:31:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p20",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-06T00:49:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p21",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-10-11T09:43:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p22",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-21T02:17:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p23",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-09-20T06:34:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p24",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-26T12:24:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p25",
+   "org_id": "payments",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-09-01T12:07:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p26",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-04T18:32:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p27",
+   "org_id": "payments",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-08-13T04:22:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p28",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-30T23:46:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p29",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-08-24T19:05:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p30",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-24T22:11:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p31",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-09-23T15:24:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p32",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-10T19:06:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p33",
+   "org_id": "payments",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-10-08T14:52:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p34",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-09T07:11:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p35",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-10-11T05:33:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p36",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-10-11T16:59:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p37",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-08-14T10:43:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p38",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-10-02T01:14:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p39",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-09-15T06:16:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p40",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-18T00:43:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p41",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-27T03:01:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p42",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-27T05:07:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p43",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-09-10T12:21:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p44",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-21T02:06:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p45",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-10-10T17:54:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p46",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-10-04T19:02:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p47",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-21T07:25:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p48",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-31T08:57:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p49",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-09-08T07:36:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p50",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-10-01T03:40:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p51",
+   "org_id": "payments",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-09-05T23:44:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p52",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-19T02:39:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p53",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-09-13T02:17:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p54",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-08-25T13:33:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p55",
+   "org_id": "payments",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-08-23T10:51:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "payments-p56",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-02T18:33:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p57",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-04T21:57:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "payments-p58",
+   "org_id": "payments",
+   "alert_name": "PaymentsLatencyHigh",
+   "fired_at": "2026-09-22T10:03:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "payments-p59",
+   "org_id": "payments",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-23T22:41:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p0",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-07T01:28:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p1",
+   "org_id": "search",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-09-24T11:34:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p2",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-26T04:26:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p3",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-07T00:57:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p4",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-11T16:34:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p5",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-03T03:41:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p6",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-21T00:15:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p7",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-10-04T12:27:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p8",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-10-09T12:48:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p9",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-10-09T02:05:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p10",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-20T22:25:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p11",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-09-05T03:39:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p12",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-09T08:51:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p13",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-10-02T11:02:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p14",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-28T17:18:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p15",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-31T13:45:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p16",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-14T08:14:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p17",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-10-07T12:19:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p18",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-18T03:49:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p19",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-31T03:38:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p20",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-09T04:08:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p21",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-09-01T16:33:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p22",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-10-05T11:04:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p23",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-29T21:52:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p24",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-14T14:03:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p25",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-08-20T11:04:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p26",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-10-02T12:33:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p27",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-09-06T12:15:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p28",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-10-10T02:19:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p29",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-08-18T20:10:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p30",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-23T19:13:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p31",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-08-30T09:26:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p32",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-21T20:59:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p33",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-08-03T00:53:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p34",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-29T02:46:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p35",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-08-22T03:09:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p36",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-24T18:59:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p37",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-09-27T05:16:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p38",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-01T07:57:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p39",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-09-14T07:46:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p40",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-12T05:54:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p41",
+   "org_id": "search",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-10-03T11:55:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p42",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-18T12:40:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p43",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-09-15T01:41:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p44",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-18T10:41:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p45",
+   "org_id": "search",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-10-01T23:16:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p46",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-28T19:56:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p47",
+   "org_id": "search",
+   "alert_name": "QueueDepth",
+   "fired_at": "2026-09-18T22:01:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p48",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-29T14:40:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p49",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-09-28T08:47:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p50",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-11T12:00:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p51",
+   "org_id": "search",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-10-10T08:53:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p52",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-10-03T05:44:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p53",
+   "org_id": "search",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-08-31T06:07:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p54",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-21T03:00:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p55",
+   "org_id": "search",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-08-16T09:53:00+00:00",
+   "actionable": null
+  },
+  {
+   "id": "search-p56",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-08-07T04:57:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p57",
+   "org_id": "search",
+   "alert_name": "DiskFull",
+   "fired_at": "2026-08-25T06:52:00+00:00",
+   "actionable": true
+  },
+  {
+   "id": "search-p58",
+   "org_id": "search",
+   "alert_name": "IndexLagWarning",
+   "fired_at": "2026-09-27T15:20:00+00:00",
+   "actionable": false
+  },
+  {
+   "id": "search-p59",
+   "org_id": "search",
+   "alert_name": "ErrorRateHigh",
+   "fired_at": "2026-10-11T22:47:00+00:00",
+   "actionable": true
+  }
+ ],
+ "support_requests": [
+  {
+   "id": "payments-s0",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-23T01:04:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": null
+  },
+  {
+   "id": "payments-s1",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-03T15:42:00+00:00",
+   "first_human_response_at": "2026-08-03T16:02:00+00:00",
+   "closed_at": "2026-08-03T23:42:00+00:00"
+  },
+  {
+   "id": "payments-s2",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-23T20:07:00+00:00",
+   "first_human_response_at": "2026-08-23T20:26:00+00:00",
+   "closed_at": "2026-08-24T01:07:00+00:00"
+  },
+  {
+   "id": "payments-s3",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-02T01:49:00+00:00",
+   "first_human_response_at": "2026-09-02T02:09:00+00:00",
+   "closed_at": "2026-09-04T19:49:00+00:00"
+  },
+  {
+   "id": "payments-s4",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-24T15:55:00+00:00",
+   "first_human_response_at": "2026-08-24T17:08:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s5",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-10-02T21:24:00+00:00",
+   "first_human_response_at": "2026-10-02T23:30:00+00:00",
+   "closed_at": "2026-10-04T01:24:00+00:00"
+  },
+  {
+   "id": "payments-s6",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-21T01:58:00+00:00",
+   "first_human_response_at": "2026-09-21T02:33:00+00:00",
+   "closed_at": "2026-09-23T14:58:00+00:00"
+  },
+  {
+   "id": "payments-s7",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-25T02:50:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-08-27T15:50:00+00:00"
+  },
+  {
+   "id": "payments-s8",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-09T01:14:00+00:00",
+   "first_human_response_at": "2026-09-09T02:04:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s9",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-11T14:03:00+00:00",
+   "first_human_response_at": "2026-08-11T14:29:00+00:00",
+   "closed_at": "2026-08-13T22:03:00+00:00"
+  },
+  {
+   "id": "payments-s10",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-04T05:58:00+00:00",
+   "first_human_response_at": "2026-09-04T07:48:00+00:00",
+   "closed_at": "2026-09-06T10:58:00+00:00"
+  },
+  {
+   "id": "payments-s11",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-14T12:13:00+00:00",
+   "first_human_response_at": "2026-09-14T15:56:00+00:00",
+   "closed_at": "2026-09-14T19:13:00+00:00"
+  },
+  {
+   "id": "payments-s12",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-10-03T06:59:00+00:00",
+   "first_human_response_at": "2026-10-03T09:48:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s13",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-30T19:36:00+00:00",
+   "first_human_response_at": "2026-09-30T20:03:00+00:00",
+   "closed_at": "2026-10-01T03:36:00+00:00"
+  },
+  {
+   "id": "payments-s14",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-08T15:32:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-09-10T11:32:00+00:00"
+  },
+  {
+   "id": "payments-s15",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-12T22:42:00+00:00",
+   "first_human_response_at": "2026-08-12T23:47:00+00:00",
+   "closed_at": "2026-08-13T23:42:00+00:00"
+  },
+  {
+   "id": "payments-s16",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-20T07:31:00+00:00",
+   "first_human_response_at": "2026-08-20T09:50:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s17",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-12T20:00:00+00:00",
+   "first_human_response_at": "2026-09-12T20:37:00+00:00",
+   "closed_at": "2026-09-15T03:00:00+00:00"
+  },
+  {
+   "id": "payments-s18",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-19T16:50:00+00:00",
+   "first_human_response_at": "2026-08-19T18:03:00+00:00",
+   "closed_at": "2026-08-22T04:50:00+00:00"
+  },
+  {
+   "id": "payments-s19",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-25T17:42:00+00:00",
+   "first_human_response_at": "2026-08-25T21:27:00+00:00",
+   "closed_at": "2026-08-26T03:42:00+00:00"
+  },
+  {
+   "id": "payments-s20",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-12T08:02:00+00:00",
+   "first_human_response_at": "2026-09-12T11:30:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s21",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-22T02:12:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-09-22T15:12:00+00:00"
+  },
+  {
+   "id": "payments-s22",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-07T14:30:00+00:00",
+   "first_human_response_at": "2026-08-07T17:18:00+00:00",
+   "closed_at": "2026-08-10T12:30:00+00:00"
+  },
+  {
+   "id": "payments-s23",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-04T08:14:00+00:00",
+   "first_human_response_at": "2026-08-04T08:39:00+00:00",
+   "closed_at": "2026-08-05T15:14:00+00:00"
+  },
+  {
+   "id": "payments-s24",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-18T03:18:00+00:00",
+   "first_human_response_at": "2026-08-18T05:04:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s25",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-16T04:53:00+00:00",
+   "first_human_response_at": "2026-09-16T06:58:00+00:00",
+   "closed_at": "2026-09-17T08:53:00+00:00"
+  },
+  {
+   "id": "payments-s26",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-08T12:05:00+00:00",
+   "first_human_response_at": "2026-09-08T15:58:00+00:00",
+   "closed_at": "2026-09-08T20:05:00+00:00"
+  },
+  {
+   "id": "payments-s27",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-17T23:39:00+00:00",
+   "first_human_response_at": "2026-08-18T01:18:00+00:00",
+   "closed_at": "2026-08-18T00:39:00+00:00"
+  },
+  {
+   "id": "payments-s28",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-07T12:53:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": null
+  },
+  {
+   "id": "payments-s29",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-27T03:20:00+00:00",
+   "first_human_response_at": "2026-08-27T07:19:00+00:00",
+   "closed_at": "2026-08-29T14:20:00+00:00"
+  },
+  {
+   "id": "payments-s30",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-28T23:08:00+00:00",
+   "first_human_response_at": "2026-08-29T00:58:00+00:00",
+   "closed_at": "2026-08-31T14:08:00+00:00"
+  },
+  {
+   "id": "payments-s31",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-17T02:09:00+00:00",
+   "first_human_response_at": "2026-08-17T02:59:00+00:00",
+   "closed_at": "2026-08-18T16:09:00+00:00"
+  },
+  {
+   "id": "payments-s32",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-22T19:34:00+00:00",
+   "first_human_response_at": "2026-08-22T19:50:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s33",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-24T17:14:00+00:00",
+   "first_human_response_at": "2026-09-24T20:24:00+00:00",
+   "closed_at": "2026-09-27T15:14:00+00:00"
+  },
+  {
+   "id": "payments-s34",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-08T13:09:00+00:00",
+   "first_human_response_at": "2026-08-08T16:22:00+00:00",
+   "closed_at": "2026-08-10T06:09:00+00:00"
+  },
+  {
+   "id": "payments-s35",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-08T04:52:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-08-08T11:52:00+00:00"
+  },
+  {
+   "id": "payments-s36",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-25T04:09:00+00:00",
+   "first_human_response_at": "2026-09-25T06:13:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s37",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-17T18:29:00+00:00",
+   "first_human_response_at": "2026-09-17T22:26:00+00:00",
+   "closed_at": "2026-09-20T14:29:00+00:00"
+  },
+  {
+   "id": "payments-s38",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-17T07:55:00+00:00",
+   "first_human_response_at": "2026-08-17T08:11:00+00:00",
+   "closed_at": "2026-08-20T01:55:00+00:00"
+  },
+  {
+   "id": "payments-s39",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-10T07:00:00+00:00",
+   "first_human_response_at": "2026-08-10T10:39:00+00:00",
+   "closed_at": "2026-08-11T07:00:00+00:00"
+  },
+  {
+   "id": "payments-s40",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-09T05:41:00+00:00",
+   "first_human_response_at": "2026-08-09T08:15:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "payments-s41",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-08-09T04:27:00+00:00",
+   "first_human_response_at": "2026-08-09T07:21:00+00:00",
+   "closed_at": "2026-08-10T11:27:00+00:00"
+  },
+  {
+   "id": "payments-s42",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-08T18:03:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-09-09T10:03:00+00:00"
+  },
+  {
+   "id": "payments-s43",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-23T20:28:00+00:00",
+   "first_human_response_at": "2026-09-23T21:33:00+00:00",
+   "closed_at": "2026-09-24T02:28:00+00:00"
+  },
+  {
+   "id": "payments-s44",
+   "org_id": "payments",
+   "channel": "#payments-help",
+   "opened_at": "2026-09-28T09:03:00+00:00",
+   "first_human_response_at": "2026-09-28T09:25:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s0",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-13T10:52:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": null
+  },
+  {
+   "id": "search-s1",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-09T17:21:00+00:00",
+   "first_human_response_at": "2026-09-09T21:09:00+00:00",
+   "closed_at": "2026-09-10T18:21:00+00:00"
+  },
+  {
+   "id": "search-s2",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-07T09:15:00+00:00",
+   "first_human_response_at": "2026-10-07T12:15:00+00:00",
+   "closed_at": "2026-10-09T11:15:00+00:00"
+  },
+  {
+   "id": "search-s3",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-16T23:59:00+00:00",
+   "first_human_response_at": "2026-09-17T01:43:00+00:00",
+   "closed_at": "2026-09-18T07:59:00+00:00"
+  },
+  {
+   "id": "search-s4",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-08-16T10:22:00+00:00",
+   "first_human_response_at": "2026-08-16T13:11:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s5",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-04T14:08:00+00:00",
+   "first_human_response_at": "2026-10-04T14:11:00+00:00",
+   "closed_at": "2026-10-05T04:08:00+00:00"
+  },
+  {
+   "id": "search-s6",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-10T16:44:00+00:00",
+   "first_human_response_at": "2026-09-10T17:42:00+00:00",
+   "closed_at": "2026-09-11T15:44:00+00:00"
+  },
+  {
+   "id": "search-s7",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-05T08:14:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-10-08T03:14:00+00:00"
+  },
+  {
+   "id": "search-s8",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-14T06:49:00+00:00",
+   "first_human_response_at": "2026-09-14T07:03:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s9",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-22T17:40:00+00:00",
+   "first_human_response_at": "2026-09-22T18:45:00+00:00",
+   "closed_at": "2026-09-23T09:40:00+00:00"
+  },
+  {
+   "id": "search-s10",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-13T13:09:00+00:00",
+   "first_human_response_at": "2026-09-13T13:45:00+00:00",
+   "closed_at": "2026-09-16T01:09:00+00:00"
+  },
+  {
+   "id": "search-s11",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-02T18:20:00+00:00",
+   "first_human_response_at": "2026-10-02T20:37:00+00:00",
+   "closed_at": "2026-10-04T11:20:00+00:00"
+  },
+  {
+   "id": "search-s12",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-10T17:52:00+00:00",
+   "first_human_response_at": "2026-10-10T21:42:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s13",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-12T06:48:00+00:00",
+   "first_human_response_at": "2026-09-12T09:26:00+00:00",
+   "closed_at": "2026-09-14T23:48:00+00:00"
+  },
+  {
+   "id": "search-s14",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-10T20:13:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-09-13T19:13:00+00:00"
+  },
+  {
+   "id": "search-s15",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-12T14:06:00+00:00",
+   "first_human_response_at": "2026-09-12T17:57:00+00:00",
+   "closed_at": "2026-09-13T11:06:00+00:00"
+  },
+  {
+   "id": "search-s16",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-09T16:32:00+00:00",
+   "first_human_response_at": "2026-10-09T20:14:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s17",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-15T04:56:00+00:00",
+   "first_human_response_at": "2026-09-15T06:53:00+00:00",
+   "closed_at": "2026-09-16T14:56:00+00:00"
+  },
+  {
+   "id": "search-s18",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-10T10:16:00+00:00",
+   "first_human_response_at": "2026-10-10T11:21:00+00:00",
+   "closed_at": "2026-10-11T22:16:00+00:00"
+  },
+  {
+   "id": "search-s19",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-11T16:56:00+00:00",
+   "first_human_response_at": "2026-10-11T20:17:00+00:00",
+   "closed_at": "2026-10-14T11:56:00+00:00"
+  },
+  {
+   "id": "search-s20",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-16T02:37:00+00:00",
+   "first_human_response_at": "2026-09-16T05:19:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s21",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-08-24T18:38:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-08-26T06:38:00+00:00"
+  },
+  {
+   "id": "search-s22",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-12T00:54:00+00:00",
+   "first_human_response_at": "2026-09-12T01:15:00+00:00",
+   "closed_at": "2026-09-13T13:54:00+00:00"
+  },
+  {
+   "id": "search-s23",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-08-24T08:15:00+00:00",
+   "first_human_response_at": "2026-08-24T09:26:00+00:00",
+   "closed_at": "2026-08-26T03:15:00+00:00"
+  },
+  {
+   "id": "search-s24",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-01T02:24:00+00:00",
+   "first_human_response_at": "2026-09-01T06:14:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s25",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-21T03:58:00+00:00",
+   "first_human_response_at": "2026-09-21T04:20:00+00:00",
+   "closed_at": "2026-09-21T21:58:00+00:00"
+  },
+  {
+   "id": "search-s26",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-08-16T17:29:00+00:00",
+   "first_human_response_at": "2026-08-16T18:30:00+00:00",
+   "closed_at": "2026-08-18T19:29:00+00:00"
+  },
+  {
+   "id": "search-s27",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-05T03:57:00+00:00",
+   "first_human_response_at": "2026-10-05T04:38:00+00:00",
+   "closed_at": "2026-10-06T07:57:00+00:00"
+  },
+  {
+   "id": "search-s28",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-08-08T20:18:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": null
+  },
+  {
+   "id": "search-s29",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-09T18:17:00+00:00",
+   "first_human_response_at": "2026-09-09T20:03:00+00:00",
+   "closed_at": "2026-09-11T13:17:00+00:00"
+  },
+  {
+   "id": "search-s30",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-21T09:21:00+00:00",
+   "first_human_response_at": "2026-09-21T11:22:00+00:00",
+   "closed_at": "2026-09-23T15:21:00+00:00"
+  },
+  {
+   "id": "search-s31",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-08-08T16:01:00+00:00",
+   "first_human_response_at": "2026-08-08T16:55:00+00:00",
+   "closed_at": "2026-08-10T22:01:00+00:00"
+  },
+  {
+   "id": "search-s32",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-07T10:49:00+00:00",
+   "first_human_response_at": "2026-09-07T14:42:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s33",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-25T03:56:00+00:00",
+   "first_human_response_at": "2026-09-25T06:56:00+00:00",
+   "closed_at": "2026-09-25T06:56:00+00:00"
+  },
+  {
+   "id": "search-s34",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-11T16:28:00+00:00",
+   "first_human_response_at": "2026-10-11T18:57:00+00:00",
+   "closed_at": "2026-10-13T17:28:00+00:00"
+  },
+  {
+   "id": "search-s35",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-15T09:58:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-09-15T10:58:00+00:00"
+  },
+  {
+   "id": "search-s36",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-04T00:25:00+00:00",
+   "first_human_response_at": "2026-09-04T01:43:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s37",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-10T13:59:00+00:00",
+   "first_human_response_at": "2026-10-10T15:40:00+00:00",
+   "closed_at": "2026-10-12T19:59:00+00:00"
+  },
+  {
+   "id": "search-s38",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-20T23:45:00+00:00",
+   "first_human_response_at": "2026-09-21T02:58:00+00:00",
+   "closed_at": "2026-09-23T21:45:00+00:00"
+  },
+  {
+   "id": "search-s39",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-26T21:49:00+00:00",
+   "first_human_response_at": "2026-09-27T01:40:00+00:00",
+   "closed_at": "2026-09-28T02:49:00+00:00"
+  },
+  {
+   "id": "search-s40",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-16T10:33:00+00:00",
+   "first_human_response_at": "2026-09-16T11:31:00+00:00",
+   "closed_at": null
+  },
+  {
+   "id": "search-s41",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-08-27T20:14:00+00:00",
+   "first_human_response_at": "2026-08-27T22:07:00+00:00",
+   "closed_at": "2026-08-30T11:14:00+00:00"
+  },
+  {
+   "id": "search-s42",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-08-05T15:24:00+00:00",
+   "first_human_response_at": null,
+   "closed_at": "2026-08-07T17:24:00+00:00"
+  },
+  {
+   "id": "search-s43",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-09-02T14:17:00+00:00",
+   "first_human_response_at": "2026-09-02T17:10:00+00:00",
+   "closed_at": "2026-09-04T18:17:00+00:00"
+  },
+  {
+   "id": "search-s44",
+   "org_id": "search",
+   "channel": "#search-help",
+   "opened_at": "2026-10-07T21:59:00+00:00",
+   "first_human_response_at": "2026-10-07T22:43:00+00:00",
+   "closed_at": null
+  }
+ ],
+ "coverage": {
+  "payments": {
+   "incidents": "@now",
+   "deploys": "@now",
+   "pages": "@now",
+   "support": "@now"
+  },
+  "search": {
+   "incidents": "@now",
+   "deploys": "@now",
+   "pages": "@now",
+   "support": "2026-09-20T00:00:00+00:00"
+  }
+ }
+}

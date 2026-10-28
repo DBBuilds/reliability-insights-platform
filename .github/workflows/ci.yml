@@ -1,0 +1,48 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: backend } }
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
+      - uses: astral-sh/setup-uv@v10
+      - run: uv sync --frozen
+      - run: uv run ruff check . && uv run ruff format --check .
+      - run: uv run pytest -q
+      - name: Committed schema matches the code
+        run: |
+          uv run python -m insights.export_schema
+          git diff --exit-code -- ../schema
+      - name: No breaking changes vs. main
+        if: github.event_name == 'pull_request'
+        run: |
+          if git cat-file -e origin/${{ github.base_ref }}:schema/schema.graphql 2>/dev/null; then
+            git show origin/${{ github.base_ref }}:schema/schema.graphql > /tmp/base.graphql
+            uv run python ../scripts/check_breaking.py /tmp/base.graphql ../schema/schema.graphql
+          else
+            echo "No schema on the base branch yet; skipping."
+          fi
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: frontend } }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version-file: frontend/.nvmrc, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: npm ci
+      - name: Generated types match the contract
+        run: |
+          npm run codegen
+          git diff --exit-code -- src/gql
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
