@@ -74,3 +74,31 @@ def test_org_with_no_connected_sources_is_stale_not_zero():
     assert r.incidents_total == 0
     assert r.stale_streams == ["incidents", "deploys", "pages", "support"]
     assert r.insights[0].id == "stale-data"
+
+
+def test_weekly_points_add_up_to_the_window_totals(service):
+    r = service.report("eng", date(2026, 8, 5), date(2026, 10, 12))  # starts on a Wednesday
+    assert r.weekly[0].partial and not r.weekly[1].partial
+    assert sum(w.deploys for w in r.weekly) == r.deploys_total
+    assert sum(w.incidents for w in r.weekly) == r.incidents_total
+    assert sum(w.pages for w in r.weekly) == r.pages_total
+    assert sum(w.off_hours_pages for w in r.weekly) == r.off_hours_pages
+
+
+def test_syncs_report_the_oldest_sync_in_scope(service):
+    syncs = service.report("eng", date(2026, 9, 7), date(2026, 10, 5)).syncs
+    assert list(syncs) == list(STREAMS) and syncs["support"] == datetime(2026, 9, 20, tzinfo=UTC)
+
+
+def test_recent_incidents_are_newest_first(service):
+    started = [i.started_at for i in service.report("eng", date(2026, 8, 3), date(2026, 10, 12)).incidents]
+    assert len(started) == 22 and started == sorted(started, reverse=True)
+
+
+def test_children_are_direct_child_orgs(service):
+    assert service.children("eng") == ["payments", "search"] and service.children("payments") == []
+
+
+def test_delivery_without_commit_times_has_no_lead_time(service):
+    r = service.report("payments", date(2026, 8, 3), date(2026, 10, 12))
+    assert r.lead_time.sample_size == 0 and r.deploy_frequency[0] is not None and r.slos == []

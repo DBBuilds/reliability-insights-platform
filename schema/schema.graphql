@@ -6,11 +6,49 @@ type AlertCount {
 """Date (isoformat)"""
 scalar Date
 
+"""Date with time (isoformat)"""
+scalar DateTime
+
 type DeliveryMetrics {
   deploys: Int!
 
   """0..1, null with no deploys."""
   changeFailureRate: Float
+
+  """
+  Deploys per day for the median service, among services that deployed in the window.
+  """
+  deployFrequency: DoraMetric
+
+  """Minutes from commit to deploy, median."""
+  leadTime: DoraMetric
+
+  """
+  Failed deployment recovery time: minutes from start to resolve of deploy-caused incidents, median.
+  """
+  recoveryTime: DoraMetric
+}
+
+"""Software delivery performance levels from the 2024 DORA report."""
+enum DoraLevel {
+  ELITE
+  HIGH
+  MEDIUM
+  LOW
+}
+
+"""
+A value, its sample size, and the 2024 DORA levels whose published range contains it.
+"""
+type DoraMetric {
+  """Null with too few samples."""
+  value: Float
+  sampleSize: Int
+
+  """
+  Empty when the value falls between published ranges. The levels are survey clusters, not targets.
+  """
+  levels2024: [DoraLevel!]
 }
 
 """Minutes. Null statistics mean too few samples; see sampleSize."""
@@ -20,13 +58,26 @@ type DurationStat {
   p90Minutes: Float
 }
 
+type IncidentItem {
+  id: ID
+  orgId: ID
+  severity: SeverityLevel
+  service: String
+  title: String
+  startedAt: DateTime
+  detectedAt: DateTime
+
+  """Null while open."""
+  resolvedAt: DateTime
+}
+
 type IncidentMetrics {
   total: Int!
   open: Int!
   bySeverity: [SeverityCount!]!
   timeToDetect: DurationStat
   timeToResolve: DurationStat
-  weekly: [WeeklyCount!]!
+  weekly: [WeeklyCount!]! @deprecated(reason: "Use OrgMetrics.weekly.")
 }
 
 type Insight {
@@ -50,6 +101,7 @@ type OnCallMetrics {
   """0..1 among pages a responder marked."""
   actionableShare: Float
   noisiestAlerts: [AlertCount!]!
+  byHour: [PageHourCount!]
 }
 
 type Org {
@@ -72,6 +124,24 @@ type OrgMetrics {
   onCall: OnCallMetrics
   support: SupportMetrics
   insights: [Insight!]!
+  weekly: [WeeklyPoint!]
+  slos: [SloMetrics!]
+  syncs: [StreamSync!]
+
+  """Newest first; limit 1 to 100."""
+  recentIncidents(limit: Int! = 20): [IncidentItem!]
+
+  """Direct child orgs over the same window. Computed only when selected."""
+  children: [OrgMetrics!]
+}
+
+"""
+Pages in one weekday (0 = Monday) and hour, in each page's own time zone.
+"""
+type PageHourCount {
+  weekday: Int
+  hour: Int
+  pages: Int
 }
 
 type Query {
@@ -96,6 +166,48 @@ enum SeverityLevel {
   SEV4
 }
 
+type SloDay {
+  day: Date
+
+  """Share of the window's budget left after this day."""
+  budgetRemaining: Float
+}
+
+"""An SLO over its own window, which ends at the query's end date."""
+type SloMetrics {
+  id: ID
+  service: String
+  objective: Float
+  windowDays: Int
+
+  """Good events / all events."""
+  attainment: Float
+
+  """Share of the error budget left; negative when overspent."""
+  budgetRemaining: Float
+
+  """1 spends the budget exactly over the window."""
+  burnRate1d: Float
+  burnRate3d: Float
+  status: SloStatus
+  daily: [SloDay!]
+}
+
+"""EXHAUSTED: no budget left. BURNING: 3-day burn rate >= 1. Else OK."""
+enum SloStatus {
+  OK
+  BURNING
+  EXHAUSTED
+}
+
+type StreamSync {
+  stream: String
+
+  """Oldest across orgs in scope; null if one never synced."""
+  lastSyncedAt: DateTime
+  stale: Boolean
+}
+
 type SupportMetrics {
   requests: Int!
 
@@ -113,4 +225,18 @@ type WeeklyCount {
   weekStart: Date!
   count: Int!
   partial: Boolean!
+}
+
+"""One UTC ISO week. Partial weeks understate; compare complete weeks."""
+type WeeklyPoint {
+  weekStart: Date
+  partial: Boolean
+  deploys: Int
+  changeFailureRate: Float
+  leadTime: DurationStat
+  incidents: Int
+  timeToDetect: DurationStat
+  timeToResolve: DurationStat
+  pages: Int
+  offHoursPages: Int
 }
