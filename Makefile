@@ -1,7 +1,7 @@
 # One entry point for local work. CI runs the same steps as separate jobs, plus the breaking-change check on PRs.
 NODE_OK := $(shell node -e 'const [a,b]=process.versions.node.split(".").map(Number);process.exit(a>22||(a===22&&b>=12)?0:1)' 2>/dev/null && echo yes)
 
-.PHONY: setup api web test lint schema check clean
+.PHONY: setup api web test lint schema demo-data check clean
 
 setup:                 ## install backend (uv) and frontend (npm) deps from the lockfiles
 	cd backend && uv sync --frozen
@@ -17,6 +17,9 @@ web:                   ## frontend on :5173, proxies /graphql to :8000
 schema:                ## regenerate the contract and the frontend types after a schema change
 	cd backend && uv run python -m insights.export_schema
 	cd frontend && npm run codegen
+
+demo-data:             ## regenerate backend/data/demo.json (deterministic); serve it with INSIGHTS_DATA=data/demo.json make api
+	cd backend && uv run python -m insights.demo_data
 
 test:
 	cd backend && uv run pytest -q

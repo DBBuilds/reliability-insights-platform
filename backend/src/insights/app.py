@@ -6,6 +6,7 @@ Run locally:  uv run uvicorn insights.app:app --reload --port 8000
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,7 +19,9 @@ from insights.sources.fixtures import FixtureSource
 
 def build_service() -> InsightsService:
     # Swap FixtureSource for a real connector (or a composite of several) here.
-    return InsightsService(FixtureSource())
+    data = os.environ.get("INSIGHTS_DATA")  # for example data/demo.json
+    source = FixtureSource(Path(data)) if data else FixtureSource()
+    return InsightsService(source, now=source.as_of)
 
 
 def create_app(service: InsightsService | None = None) -> FastAPI:
