@@ -8,7 +8,7 @@ which vendor the data came from.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import date, datetime
 from enum import StrEnum
 
 
@@ -28,6 +28,8 @@ class Incident:
     detected_at: datetime | None  # first alert or report; None if unknown
     resolved_at: datetime | None  # None while open
     caused_by_deploy_id: str | None = None
+    service: str | None = None
+    title: str | None = None
 
 
 @dataclass(frozen=True)
@@ -36,6 +38,7 @@ class Deploy:
     org_id: str
     service: str
     deployed_at: datetime
+    committed_at: datetime | None = None  # first commit in the change; for lead time
 
 
 @dataclass(frozen=True)
@@ -62,3 +65,30 @@ class Org:
     id: str
     name: str
     parent_id: str | None = None
+
+
+@dataclass(frozen=True)
+class Slo:
+    id: str
+    org_id: str
+    service: str
+    objective: float  # target share of good events, for example 0.999
+    window_days: int  # the error budget resets over this many days
+
+    def __post_init__(self) -> None:
+        if not 0 < self.objective < 1 or self.window_days < 1:
+            raise ValueError(f"SLO {self.id}: objective must be in (0, 1) and window_days >= 1")
+
+
+@dataclass(frozen=True)
+class SliDaily:
+    """Good and total events for one SLO on one UTC day."""
+
+    slo_id: str
+    day: date
+    good: int
+    total: int
+
+    def __post_init__(self) -> None:
+        if not 0 <= self.good <= self.total:
+            raise ValueError(f"SLI {self.slo_id} on {self.day}: need 0 <= good <= total")

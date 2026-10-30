@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 from graphql import get_introspection_query
 
-from insights.app import create_app
+from insights.app import build_service, create_app
 from insights.service import InsightsService
 from insights.sources.fixtures import FixtureSource
 
@@ -75,6 +75,17 @@ def test_too_many_aliases_are_rejected():
 
 def test_graphiql_introspection_is_within_the_limits():
     assert "errors" not in client.post("/graphql", json={"query": get_introspection_query(descriptions=True)}).json()
+
+
+def test_snapshot_data_is_read_as_of_its_snapshot_time(monkeypatch, tmp_path):
+    # Otherwise every sync in a fixed snapshot looks stale against the wall clock.
+    data = tmp_path / "snapshot.json"
+    data.write_text(
+        '{"as_of": "2026-10-26T06:00:00+00:00", "orgs": [], "incidents": [], "deploys": [], "pages": [], '
+        '"support_requests": []}'
+    )
+    monkeypatch.setenv("INSIGHTS_DATA", str(data))
+    assert build_service().now().isoformat() == "2026-10-26T06:00:00+00:00"
 
 
 def test_healthz():
