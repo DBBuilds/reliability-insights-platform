@@ -1,6 +1,9 @@
 from fastapi.testclient import TestClient
+from graphql import get_introspection_query
 
 from insights.app import create_app
+from insights.service import InsightsService
+from insights.sources.fixtures import FixtureSource
 
 QUERY = """
 query($org: ID!, $start: Date!, $end: Date!) {
@@ -18,8 +21,8 @@ query($org: ID!, $start: Date!, $end: Date!) {
 client = TestClient(create_app())
 
 
-def run(org, start="2026-08-03", end="2026-10-12"):
-    r = client.post("/graphql", json={"query": QUERY, "variables": {"org": org, "start": start, "end": end}})
+def run(org, start="2026-08-03", end="2026-10-12", api=client):
+    r = api.post("/graphql", json={"query": QUERY, "variables": {"org": org, "start": start, "end": end}})
     assert r.status_code == 200
     return r.json()
 
@@ -46,6 +49,32 @@ def test_bad_window_errors_without_nulling_other_fields():
     ).json()
     assert body["data"]["bad"] is None and len(body["data"]["orgs"]) == 3
     assert "end must be after start" in body["errors"][0]["message"]
+
+
+def test_unexpected_errors_are_masked():
+    class Broken(FixtureSource):
+        def incidents(self, *args):
+            raise RuntimeError("internal detail")
+
+    body = run("payments", api=TestClient(create_app(InsightsService(Broken()))))
+    assert body["data"]["orgMetrics"] is None
+    assert body["errors"][0]["message"] == "Unexpected error."
+
+
+def test_invalid_date_explains_itself():
+    body = run("payments", start="2026-13-01")
+    assert "month must be in 1..12" in body["errors"][0]["message"]
+
+
+def test_too_many_aliases_are_rejected():
+    # Each alias reruns the resolver, so aliases are how one request multiplies its cost.
+    query = "{ " + " ".join(f"a{i}: orgs {{ id }}" for i in range(11)) + " }"
+    body = client.post("/graphql", json={"query": query}).json()
+    assert body["data"] is None and "aliases" in body["errors"][0]["message"]
+
+
+def test_graphiql_introspection_is_within_the_limits():
+    assert "errors" not in client.post("/graphql", json={"query": get_introspection_query(descriptions=True)}).json()
 
 
 def test_healthz():

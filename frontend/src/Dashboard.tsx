@@ -25,7 +25,7 @@ export function Dashboard({ orgId, start, end }: Props) {
         <ul className="insights">
           {insights.map((i) => (
             <li key={i.id}>
-              <span className={`dot ${i.level.toLowerCase()}`} aria-label={i.level} /> <strong>{i.title}</strong>
+              <span className={`dot ${i.level.toLowerCase()}`} role="img" aria-label={i.level} /> <strong>{i.title}</strong>
               {i.detail && <span className="muted"> {i.detail}</span>}
             </li>
           ))}
@@ -33,19 +33,19 @@ export function Dashboard({ orgId, start, end }: Props) {
       )}
 
       <div className="cards">
-        <Card title="Incidents" lead={`${m.incidents?.total ?? 0} total, ${m.incidents?.open ?? 0} open`}>
+        <Card title="Incidents" lead={m.incidents && `${m.incidents.total} total, ${m.incidents.open} open`}>
           <Row label="Median time to resolve" value={minutes(ttr?.medianMinutes)} />
           <Row label="p90 time to resolve" value={minutes(ttr?.p90Minutes)} />
           <Row label="Median time to detect" value={minutes(m.incidents?.timeToDetect?.medianMinutes)} />
         </Card>
-        <Card title="Delivery" lead={`${m.delivery?.deploys ?? 0} deploys`}>
+        <Card title="Delivery" lead={m.delivery && `${m.delivery.deploys} deploys`}>
           <Row label="Change failure rate" value={percent(m.delivery?.changeFailureRate)} />
         </Card>
-        <Card title="On-call" lead={`${m.onCall?.pages ?? 0} pages`}>
+        <Card title="On-call" lead={m.onCall && `${m.onCall.pages} pages`}>
           <Row label="Off hours" value={String(m.onCall?.offHoursPages ?? 0)} />
           <Row label="Actionable" value={percent(m.onCall?.actionableShare)} />
         </Card>
-        <Card title="Support" lead={`${m.support?.requests ?? 0} requests`}>
+        <Card title="Support" lead={m.support && `${m.support.requests} requests`}>
           <Row label="Median first response" value={minutes(m.support?.firstResponse?.medianMinutes)} />
           <Row label="Resolved" value={percent(m.support?.resolutionRate)} />
         </Card>
@@ -77,12 +77,13 @@ export function Dashboard({ orgId, start, end }: Props) {
   );
 }
 
-function Card({ title, lead, children }: { title: string; lead: string; children: React.ReactNode }) {
+// A null lead means the panel failed to load: say so instead of showing zeros.
+function Card({ title, lead, children }: { title: string; lead?: string | null; children: React.ReactNode }) {
   return (
     <article className="card">
       <h2>{title}</h2>
-      <p className="lead">{lead}</p>
-      <dl>{children}</dl>
+      <p className="lead">{lead ?? "Could not load"}</p>
+      {lead != null && <dl>{children}</dl>}
     </article>
   );
 }

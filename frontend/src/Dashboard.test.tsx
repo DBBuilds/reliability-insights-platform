@@ -1,5 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing/react";
 import { render, screen } from "@testing-library/react";
+import { defaultOptions } from "./apollo";
 import { Dashboard } from "./Dashboard";
 import { ORG_METRICS } from "./queries";
 
@@ -42,12 +43,16 @@ const metrics = {
   },
   insights: [
     { __typename: "Insight" as const, id: "stale-data", level: "CRITICAL" as const, title: "Some data is stale", detail: null },
+    { __typename: "Insight" as const, id: "noisy-alert", level: "WARNING" as const, title: "'IndexLag' paged 10 times", detail: null },
   ],
 };
 
-function renderWith(data: unknown) {
+function renderWith(data: unknown, errors?: { message: string; path: string[] }[]) {
   return render(
-    <MockedProvider mocks={[{ request: { query: ORG_METRICS, variables }, result: { data } }]}>
+    <MockedProvider
+      defaultOptions={defaultOptions}
+      mocks={[{ request: { query: ORG_METRICS, variables }, result: { data, errors } }]}
+    >
       <Dashboard {...variables} />
     </MockedProvider>,
   );
@@ -61,6 +66,13 @@ test("shows stale data, insights, and says 'Not enough data' instead of zero", a
   expect(screen.getAllByText("Not enough data").length).toBeGreaterThan(0);
   expect(screen.getByText("No data")).toBeInTheDocument(); // change failure rate with no deploys
   expect(screen.getByText("42 min")).toBeInTheDocument();
+  expect(screen.getByRole("img", { name: "WARNING" })).toBeInTheDocument(); // level is announced, not only colored
+});
+
+test("a panel that failed to load says so instead of showing zero", async () => {
+  renderWith({ orgMetrics: { ...metrics, delivery: null } }, [{ message: "boom", path: ["orgMetrics", "delivery"] }]);
+  expect(await screen.findByText("2 total, 1 open")).toBeInTheDocument(); // other panels still render
+  expect(screen.getByRole("heading", { name: "Delivery" }).parentElement).toHaveTextContent("DeliveryCould not load");
 });
 
 test("unknown org renders a message, not a crash", async () => {

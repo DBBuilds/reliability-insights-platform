@@ -15,10 +15,12 @@ declare module "@apollo/client" {
   }
 }
 
+// Render whatever data came back even if part of the query errored. One bad
+// field then degrades one panel, not the whole page.
+export const defaultOptions = { watchQuery: { errorPolicy: "all" }, query: { errorPolicy: "all" } } as const;
+
 export const client = new ApolloClient({
   link: new HttpLink({ uri: import.meta.env.VITE_GRAPHQL_URL ?? "/graphql" }),
   cache: new InMemoryCache(),
-  // Render whatever data came back even if part of the query errored. One bad
-  // field then degrades one panel, not the whole page.
-  defaultOptions: { watchQuery: { errorPolicy: "all" }, query: { errorPolicy: "all" } },
+  defaultOptions,
 });

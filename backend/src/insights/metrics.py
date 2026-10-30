@@ -18,7 +18,7 @@ import math
 from collections import Counter
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
-from datetime import date, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 
 from insights.models import Deploy, Incident, Page, Severity, SupportRequest
 
@@ -125,12 +125,12 @@ def resolution_rate(requests: Sequence[SupportRequest]) -> float | None:
 def weekly_counts(timestamps: Iterable[datetime], start: date, end: date) -> list[WeeklyCount]:
     """Counts per ISO week (Monday start) across [start, end). Edge weeks are flagged partial.
 
-    Partial weeks always understate. Compare complete weeks only.
+    Weeks are UTC, like the window bounds. Partial weeks always understate. Compare complete weeks only.
     """
     first_monday = start - timedelta(days=start.weekday())
     counts: Counter[date] = Counter()
     for ts in timestamps:
-        d = ts.date()
+        d = ts.astimezone(UTC).date()
         if start <= d < end:
             counts[d - timedelta(days=d.weekday())] += 1
     out, week = [], first_monday

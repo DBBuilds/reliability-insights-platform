@@ -79,7 +79,7 @@ type Query {
   orgs: [Org!]!
 
   """
-  Metrics for one org over a fixed window [start, end). Null if the org is unknown.
+  Metrics for one org over a fixed window [start, end) of at most 366 days. Null if the org is unknown.
   """
   orgMetrics(orgId: ID!, start: Date!, end: Date!): OrgMetrics
 }
