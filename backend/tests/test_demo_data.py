@@ -72,17 +72,26 @@ def test_platform_has_one_noisy_alert_that_is_rarely_actionable(service):
     assert share["platform"] <= 0.35 and share["platform"] == min(share.values())
 
 
-def test_identity_burns_its_error_budget_early_in_the_window(source):
-    def budget_used(org, days=None):
-        slo = source.slos(org)[0]
-        start = demo.END - timedelta(days=slo.window_days)
-        sli = source.sli_daily(slo.id, start, demo.END)
-        bad = sum(d.total - d.good for d in sli[:days])
-        return bad / ((1 - slo.objective) * sum(d.total for d in sli))
+def test_identity_burns_its_error_budget_early_in_the_window(service):
+    def slo(org):
+        [(_, result)] = service.report(org, *QUARTER).slos
+        return result
 
-    assert 0.6 <= budget_used("identity") < 1
-    assert budget_used("identity", days=7) >= 0.5 * budget_used("identity")  # most of it in the first week
-    assert all(budget_used(t) < 0.6 for t in TEAMS if t != "identity")
+    spent = 1 - slo("identity").budget_remaining
+    assert 0.6 <= spent < 1 and 1 - slo("identity").daily[6][1] >= 0.5 * spent  # most of it in the first week
+    assert all(1 - slo(t).budget_remaining < 0.6 for t in TEAMS if t != "identity")
+
+
+def test_the_quarter_view_tells_the_story_and_nothing_else(service):
+    expected = {
+        "eng": ["stale-data", "off-hours-pages", "error-budget:identity-auth"],
+        "payments": ["mttr-trend"],
+        "checkout": ["mttr-trend", "cfr-spike"],
+        "search": ["stale-data", "noisy-alert", "off-hours-pages"],
+        "identity": ["error-budget:identity-auth"],
+        "platform": ["noisy-alert", "off-hours-pages"],
+    }
+    assert {org: [i.id for i in service.report(org, *QUARTER).insights] for org in expected} == expected
 
 
 def test_search_support_sync_stopped_and_shows_stale(service, source):

@@ -72,12 +72,18 @@ Conventions for every metric:
 | Time to resolve (MTTR) | `resolved_at - started_at` | Resolved incidents | Define "resolved" as impact ended, not ticket closed. Report open count next to it |
 | Deploys | Production deploys in window | All services in the org | Count deploys, not commits or builds |
 | Change failure rate | Deploys linked to an incident / deploys | Distinct failed deploys | Needs the incident tool to record the causing deploy. Null with no deploys |
+| Lead time for changes | Median `deployed_at - committed_at` | Deploys with a commit time | Use the first commit in the change, not the merge |
+| Deploy frequency | Deploys per day for the median service | Services that deployed in the window | Per service, because DORA's levels describe one service; an org total grows with headcount. Services with no deploys are invisible |
+| Failed deployment recovery time | Median `resolved_at - started_at` | Resolved incidents a deploy caused | DORA's renamed "time to restore". Few samples per window; often null |
+| DORA levels | The 2024 report's levels whose range contains the value | Lead time, deploy frequency, recovery time | Survey clusters, not targets. Ranges overlap (recovery: High and Medium) and leave gaps (recovery between 1 day and 1 week) |
 | Pages | Pages fired in window | All alerts routed to the org | Dedupe re-notifications of the same alert |
 | Off-hours pages | Weekend, or outside 09:00 to 18:00 in the responder's timezone | Pages | Use the responder's timezone, not UTC. The reference uses the timestamp's own offset |
+| Pages by hour | Count per weekday and hour | Pages | Same local time as off-hours, so a night hotspot means the responder's night |
 | Actionable share | Pages marked actionable / pages marked at all | Pages with a responder verdict | Unmarked is unknown, never "not actionable" |
 | Support requests | Requests opened in window | Human-originated threads | Exclude bot traffic at the connector. It can be close to half of all messages |
 | First response | `first_human_response_at - opened_at` | Requests with a human reply | Bots and auto-acks are not responses. A reply from someone not registered as an agent still is |
 | Resolution rate | Closed / all | All requests | Measures closing discipline as much as support quality. Agree on what "closed" means before setting a target |
+| Error budget | `1 - bad / ((1 - objective) x total)` over the SLO's own window ending at `end` | Daily good and total counts | Burn rate = `(bad / total) / (1 - objective)`. BURNING at a 3-day rate >= 1, adapted from the SRE Workbook's ticket alert; daily data can't support its sub-day page alerts |
 
 ## 4. Data and connectors
 
@@ -135,6 +141,8 @@ Test that `parent == sum(children)` when no item is shared, and less when items 
 - Bound each request: windows are at most 366 days and a query at most 10 aliases
   (`service.py`, `schema.py`). Unexpected errors reach clients as "Unexpected error."
   and stay in the server log.
+- Each org and window is computed once per request, however many aliases or parents
+  (`children`) select it.
 - Don't loop uncached queries across all orgs against production sources from a laptop.
 
 ## 6. The schema contract
