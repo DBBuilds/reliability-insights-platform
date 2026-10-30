@@ -11,6 +11,12 @@ from insights.sources.base import DataSource
 
 STALE_AFTER = timedelta(hours=26)  # daily syncs get a 2-hour grace period
 STREAMS = ("incidents", "deploys", "pages", "support")  # a stream with no sync record counts as stale
+MAX_WINDOW = timedelta(days=366)  # bounds the work one request can ask for
+EARLIEST, LATEST = date(2000, 1, 1), date(2100, 1, 1)
+
+
+class UserInputError(ValueError):
+    """A bad argument from the caller. Its message is shown to API clients; other errors are masked."""
 
 
 def _bounds(start: date, end: date) -> tuple[datetime, datetime]:
@@ -71,21 +77,23 @@ class InsightsService:
         return list(seen.values())
 
     def stale_streams(self, orgs: list[str]) -> list[str]:
-        synced: dict[str, list[datetime | None]] = {s: [] for s in STREAMS}
-        for org in orgs:
-            for stream, ts in self.source.coverage(org).items():
-                synced.setdefault(stream, []).append(ts)
+        """Streams that some org in scope never synced or synced too long ago.
+
+        Orgs with no coverage at all (such as a parent that holds no records itself) are
+        skipped, unless no org in scope has any, in which case every stream is stale.
+        """
+        coverage = [c for c in (self.source.coverage(o) for o in orgs) if c] or [{}]
         now = self.now()
-        return [
-            stream
-            for stream, times in synced.items()
-            # Stale if never synced anywhere in scope, or if any org in scope is behind.
-            if not times or any(t is None or now - t > STALE_AFTER for t in times)
-        ]
+        stale = {s for c in coverage for s in {*STREAMS, *c} if c.get(s) is None or now - c[s] > STALE_AFTER}
+        return [s for s in STREAMS if s in stale] + sorted(stale - set(STREAMS))
 
     def report(self, org_id: str, start: date, end: date) -> OrgReport:
         if end <= start:
-            raise ValueError("end must be after start")
+            raise UserInputError("end must be after start")
+        if end - start > MAX_WINDOW:
+            raise UserInputError(f"window must be at most {MAX_WINDOW.days} days")
+        if start < EARLIEST or end > LATEST:
+            raise UserInputError(f"dates must be between {EARLIEST} and {LATEST}")
         lo, hi = _bounds(start, end)
         span = hi - lo
         orgs = self.scope(org_id)
@@ -98,7 +106,7 @@ class InsightsService:
         ttr = m.time_to_resolve(incidents)
         noisiest = m.noisiest_alerts(pages)
         share = m.actionable_share(pages)
-        stale = self.stale_streams([o for o in orgs if self.source.coverage(o)] or orgs)
+        stale = self.stale_streams(orgs)
         found = [
             rules.stale_sources(stale),
             rules.mttr_trend(ttr, m.time_to_resolve(previous)),

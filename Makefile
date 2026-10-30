@@ -1,4 +1,4 @@
-# One entry point for local work. CI runs `make check`.
+# One entry point for local work. CI runs the same steps as separate jobs, plus the breaking-change check on PRs.
 NODE_OK := $(shell node -e 'const [a,b]=process.versions.node.split(".").map(Number);process.exit(a>22||(a===22&&b>=12)?0:1)' 2>/dev/null && echo yes)
 
 .PHONY: setup api web test lint schema check clean
@@ -30,6 +30,7 @@ check: lint test       ## everything CI checks, including contract drift
 	cd backend && uv run python -m insights.export_schema
 	cd frontend && npm run codegen
 	git diff --exit-code -- schema frontend/src/gql || { echo "Contract drift: commit the regenerated files"; exit 1; }
+	test -z "$$(git ls-files --others --exclude-standard -- schema frontend/src/gql)" || { echo "New generated files: commit them"; exit 1; }
 	cd frontend && npm run build
 
 clean:

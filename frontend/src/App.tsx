@@ -7,7 +7,7 @@ import { completeWeeks } from "./window";
 export function App() {
   const { data, loading, error } = useQuery(ORGS);
   const [orgId, setOrgId] = useState<string>("");
-  const window = completeWeeks(4);
+  const { start, end } = completeWeeks(4);
   const orgs = data?.orgs ?? [];
   const selected = orgId || orgs[0]?.id || "";
 
@@ -26,11 +26,11 @@ export function App() {
           </select>
         </label>
         <span className="muted">
-          {window.start} to {window.end} (last 4 complete weeks)
+          {start} to {end} (last 4 complete weeks)
         </span>
       </header>
       {error && <p role="alert">Could not load orgs: {error.message}</p>}
-      {selected && <Dashboard orgId={selected} start={window.start} end={window.end} />}
+      {selected && <Dashboard orgId={selected} start={start} end={end} />}
     </main>
   );
 }

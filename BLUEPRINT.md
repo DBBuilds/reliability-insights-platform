@@ -132,6 +132,9 @@ Test that `parent == sum(children)` when no item is shared, and less when items 
   org belong in a nightly job, never in the request path.
 - Guard against huge scopes: refuse or paginate an org whose subtree exceeds a set
   size, rather than timing out.
+- Bound each request: windows are at most 366 days and a query at most 10 aliases
+  (`service.py`, `schema.py`). Unexpected errors reach clients as "Unexpected error."
+  and stay in the server log.
 - Don't loop uncached queries across all orgs against production sources from a laptop.
 
 ## 6. The schema contract

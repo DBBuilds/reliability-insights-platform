@@ -2,7 +2,8 @@ from datetime import UTC, date, datetime
 
 import pytest
 
-from insights.service import InsightsService
+from insights.models import Org
+from insights.service import STREAMS, InsightsService
 from insights.sources.fixtures import FixtureSource
 
 NOW = datetime(2026, 10, 13, 12, 0, tzinfo=UTC)
@@ -27,9 +28,21 @@ def test_stale_stream_is_reported_not_hidden(service):
     assert r.insights[0].id == "stale-data"
 
 
-def test_bad_window_is_rejected(service):
+@pytest.mark.parametrize(
+    "start, end",
+    [
+        (date(2026, 9, 1), date(2026, 9, 1)),  # empty
+        (date(2025, 10, 12), date(2026, 10, 14)),  # 367 days
+        (date(1, 1, 2), date(1, 1, 9)),  # out of range: the comparison window would start before year 1
+    ],
+)
+def test_bad_window_is_rejected(service, start, end):
     with pytest.raises(ValueError):
-        service.report("payments", date(2026, 9, 1), date(2026, 9, 1))
+        service.report("payments", start, end)
+
+
+def test_longest_window_is_allowed(service):
+    assert service.report("payments", date(2025, 10, 12), date(2026, 10, 13)).incidents_total == 14
 
 
 def test_parent_rolls_up_children_without_double_counting(service):
@@ -40,9 +53,19 @@ def test_parent_rolls_up_children_without_double_counting(service):
     assert parent.stale_streams == ["support"]  # inherited from the stale child
 
 
-def test_org_with_no_connected_sources_is_stale_not_zero():
-    from insights.models import Org
+def test_parent_is_stale_when_a_child_never_synced_a_stream():
+    class TwoTeams(FixtureSource):
+        def orgs(self):
+            return [Org("parent", "Parent"), Org("a", "A", "parent"), Org("b", "B", "parent")]
 
+        def coverage(self, org_id):
+            return {"a": dict.fromkeys(STREAMS, NOW), "b": {"incidents": NOW}}.get(org_id, {})
+
+    r = InsightsService(TwoTeams(), now=NOW).report("parent", date(2026, 9, 7), date(2026, 10, 5))
+    assert r.stale_streams == ["deploys", "pages", "support"]
+
+
+def test_org_with_no_connected_sources_is_stale_not_zero():
     class Empty(FixtureSource):
         def orgs(self):
             return [Org("lonely", "Lonely")]

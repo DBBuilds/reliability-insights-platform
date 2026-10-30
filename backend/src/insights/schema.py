@@ -14,11 +14,13 @@ from datetime import date
 from enum import Enum
 
 import strawberry
+from graphql import GraphQLError
+from strawberry.extensions import MaskErrors, MaxAliasesLimiter
 from strawberry.types import Info
 
 from insights import metrics as m
 from insights.insights import InsightLevel as _Level
-from insights.service import InsightsService, OrgReport
+from insights.service import MAX_WINDOW, InsightsService, OrgReport, UserInputError
 
 InsightLevel = strawberry.enum(_Level, description="How urgent an insight is.")
 
@@ -166,7 +168,10 @@ class Query:
     def orgs(self, info: Info) -> list[Org]:
         return [Org(id=strawberry.ID(o.id), name=o.name, parent_id=o.parent_id) for o in _service(info).source.orgs()]
 
-    @strawberry.field(description="Metrics for one org over a fixed window [start, end). Null if the org is unknown.")
+    @strawberry.field(
+        description=f"Metrics for one org over a fixed window [start, end) of at most {MAX_WINDOW.days} days. "
+        "Null if the org is unknown."
+    )
     def org_metrics(self, info: Info, org_id: strawberry.ID, start: date, end: date) -> OrgMetrics | None:
         service = _service(info)
         if org_id not in {o.id for o in service.source.orgs()}:
@@ -174,4 +179,17 @@ class Query:
         return OrgMetrics.of(service.report(str(org_id), start, end))
 
 
-schema = strawberry.Schema(query=Query)
+def _is_unexpected(error: GraphQLError) -> bool:
+    """Server-side failures get a generic message. Syntax, validation, and bad input keep theirs."""
+    original = error.original_error
+    return original is not None and not isinstance(original, GraphQLError | UserInputError)
+
+
+schema = strawberry.Schema(
+    query=Query,
+    # A fresh instance per request. The alias cap stops one request from rerunning a resolver many times.
+    extensions=[
+        lambda: MaxAliasesLimiter(max_alias_count=10),
+        lambda: MaskErrors(should_mask_error=_is_unexpected),
+    ],
+)

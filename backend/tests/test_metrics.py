@@ -1,4 +1,4 @@
-from datetime import UTC, date, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta, timezone
 
 from insights import metrics as m
 from insights.models import Deploy, Incident, Page, Severity, SupportRequest
@@ -89,6 +89,13 @@ def test_weekly_counts_flag_partial_edge_weeks():
         (date(2026, 9, 14), 2, False),
         (date(2026, 9, 21), 1, True),
     ]
+
+
+def test_weekly_counts_bucket_by_utc_date_like_the_window():
+    # Sep 13 20:00 at -07:00 is Sep 14 03:00 UTC: inside the window, so it must be counted.
+    ts = datetime(2026, 9, 14, 3, 0, tzinfo=UTC).astimezone(timezone(timedelta(hours=-7)))
+    weeks = m.weekly_counts([ts], date(2026, 9, 14), date(2026, 9, 21))
+    assert [(w.week_start, w.count) for w in weeks] == [(date(2026, 9, 14), 1)]
 
 
 def test_pct_change_guards():
