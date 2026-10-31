@@ -1,1 +1,0 @@
-{"data":{"orgs":[{"id":"eng","name":"Engineering","parentId":null},{"id":"payments","name":"Payments","parentId":"eng"},{"id":"checkout","name":"Checkout","parentId":"eng"},{"id":"search","name":"Search","parentId":"eng"},{"id":"identity","name":"Identity","parentId":"eng"},{"id":"platform","name":"Platform","parentId":"eng"}]}}
