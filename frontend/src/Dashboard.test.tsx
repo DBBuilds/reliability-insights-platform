@@ -1,7 +1,8 @@
+import { InMemoryCache } from "@apollo/client";
 import { MockedProvider } from "@apollo/client/testing/react";
 import { render, screen } from "@testing-library/react";
 import axe from "axe-core";
-import { defaultOptions } from "./apollo";
+import { cacheOptions, defaultOptions } from "./apollo";
 import { Dashboard } from "./Dashboard";
 import { ORG_METRICS } from "./queries";
 import { metrics, previous, variables } from "./test-fixtures";
@@ -47,6 +48,38 @@ test("a panel that failed to load says so instead of showing zero", async () => 
   ]);
   expect(await screen.findByText("14 incidents, 1 open. Median time to resolve: 1.6 h.")).toBeInTheDocument();
   expect(screen.getByRole("region", { name: "Delivery (DORA)" })).toHaveTextContent("Could not load.");
+});
+
+test("an insight id two orgs share never shows one org's insight on the other", async () => {
+  // The API returns __typename, so Apollo would store {Insight, id} as one shared entity across orgs.
+  const report = (orgId: string, title: string) => ({
+    request: { query: ORG_METRICS, variables: { ...variables, orgId } },
+    result: {
+      data: {
+        orgMetrics: {
+          ...metrics,
+          orgId,
+          insights: [{ __typename: "Insight", id: "noisy-alert", level: "WARNING", title, detail: null }],
+        },
+        previous,
+      },
+    },
+  });
+  const view = (orgId: string) => (
+    <MockedProvider
+      cache={new InMemoryCache(cacheOptions)}
+      defaultOptions={defaultOptions}
+      mocks={[report("platform", "Platform alert"), report("search", "Search alert")]}
+    >
+      <Dashboard {...variables} orgId={orgId} names={new Map()} onSelectOrg={() => {}} />
+    </MockedProvider>
+  );
+  const { rerender } = render(view("platform"));
+  expect(await screen.findByText("Platform alert")).toBeInTheDocument();
+  rerender(view("search"));
+  expect(await screen.findByText("Search alert")).toBeInTheDocument();
+  rerender(view("platform")); // served from the cache
+  expect(await screen.findByText("Platform alert")).toBeInTheDocument();
 });
 
 test("unknown org renders a message, not a crash", async () => {
