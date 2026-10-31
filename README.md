@@ -6,12 +6,17 @@ rule-based insights and data-freshness checks.
 
 **[Live demo](https://dbbuilds.github.io/reliability-insights-platform/)**: 26 weeks
 of synthetic data for five teams. The real backend computes every number at build
-time; the page is static.
+time; the page is static. **[A 5-minute tour](docs/tour.md)** shows what to click.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/dashboard-dark.png">
+  <img src="docs/images/dashboard-light.png" width="800" alt="The dashboard for Engineering over the last 13 weeks: a freshness row with a stale support source, two insights, DORA tiles with 2024 levels, and weekly reliability charts.">
+</picture>
 
 ## What to look for in the demo
 
 Pick **Engineering** and **Last 13 complete weeks**, then open each team from the
-Teams table.
+Teams table, or follow the [tour](docs/tour.md).
 
 | Team | Story | Where it shows |
 |---|---|---|
