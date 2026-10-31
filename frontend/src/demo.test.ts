@@ -28,5 +28,7 @@ test("a choice the demo didn't export explains itself instead of showing a blank
   vi.stubGlobal("fetch", async () => new Response("<!doctype html>", { status: 404 }));
   const variables = { orgId: "eng", start: "2026-01-05", end: "2026-02-02", previousStart: "2025-12-08" };
   const { error } = await client().query({ query: ORG_METRICS, variables });
-  expect(error?.message).toBe("This demo covers the last 4, 8, or 13 complete weeks before its snapshot.");
+  expect(error?.message).toBe(
+    "This demo has no data for that choice. It covers the orgs in the menu over the last 4, 8, or 13 complete weeks.",
+  );
 });
