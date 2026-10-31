@@ -1,12 +1,11 @@
 import { useQuery } from "@apollo/client/react";
 import { useState } from "react";
 import { Dashboard } from "./Dashboard";
-import { shortDate } from "./format";
+import { fullDate, shortDate } from "./format";
 import type { OrgsQuery } from "./gql/graphql";
 import { ORGS } from "./queries";
-import { completeWeeks } from "./window";
-
-const PRESETS = [4, 8, 13];
+import { demoAsOf } from "./demo";
+import { completeWeeks, PRESETS } from "./window";
 
 /** Orgs in tree order, each with its depth, so the picker can indent children under parents. */
 export function orgTree(orgs: OrgsQuery["orgs"]): { id: string; name: string; depth: number }[] {
@@ -26,7 +25,7 @@ export function App() {
   const { data, loading, error } = useQuery(ORGS);
   const [orgId, setOrgId] = useState("");
   const [weeks, setWeeks] = useState(4);
-  const { start, end, previousStart } = completeWeeks(weeks);
+  const { start, end, previousStart } = completeWeeks(weeks, demoAsOf ? new Date(demoAsOf) : undefined);
   const tree = orgTree(data?.orgs ?? []);
   const selected = orgId || tree[0]?.id || "";
   const lastDay = new Date(Date.parse(`${end}T00:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
@@ -59,6 +58,7 @@ export function App() {
         <span className="muted">
           {shortDate(start)} to {shortDate(lastDay)}, UTC
         </span>
+        {demoAsOf && <strong>Demo data as of {fullDate(demoAsOf)}</strong>}
       </header>
       {error && <p role="alert">Could not load orgs: {error.message}</p>}
       {selected && (

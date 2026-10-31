@@ -95,6 +95,14 @@ test("teams compare children and open one on click; a team with no children show
   ).toBeEmptyDOMElement();
 });
 
+test("counts of one read naturally", () => {
+  const one = { ...metrics, incidents: { ...metrics.incidents!, total: 1, open: 0 }, slos: metrics.slos!.slice(0, 1) };
+  render(<Reliability m={one} />);
+  expect(screen.getByText(/^1 incident, 0 open\./)).toBeInTheDocument();
+  render(<Slos m={one} />);
+  expect(screen.getByText("1 SLO, none burning.")).toBeInTheDocument();
+});
+
 test("support is one line", () => {
   render(<Support m={metrics} />);
   expect(screen.getByText("117 requests. Median first response: 25 min. Resolved: 89%.")).toBeInTheDocument();

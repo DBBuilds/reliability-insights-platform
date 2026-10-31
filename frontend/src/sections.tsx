@@ -2,7 +2,7 @@
 // A section whose data is null failed to load and says so instead of showing zeros.
 import { type ReactNode, useId } from "react";
 import { Chart, DataTable, Heatmap, Sparkline, Table } from "./charts";
-import { change, dateTime, doraLevels, minutes, objective, perDay, percent, shortDate } from "./format";
+import { change, count, dateTime, doraLevels, minutes, objective, perDay, percent, shortDate } from "./format";
 import type { OrgMetricsQuery } from "./gql/graphql";
 
 export type Metrics = NonNullable<OrgMetricsQuery["orgMetrics"]>;
@@ -169,7 +169,7 @@ export function Reliability({ m }: { m: Metrics }) {
   return (
     <Section
       title="Reliability"
-      takeaway={`${i.total} incidents, ${i.open} open. Median time to resolve: ${minutes(i.timeToResolve?.medianMinutes)}.`}
+      takeaway={`${count(i.total, "incident")}, ${i.open} open. Median time to resolve: ${minutes(i.timeToResolve?.medianMinutes)}.`}
     >
       <p>By severity: {severities}.</p>
       <div className="charts">
@@ -259,7 +259,7 @@ export function OnCall({ m }: { m: Metrics }) {
   return (
     <Section
       title="On-call"
-      takeaway={`${o.pages} pages, ${percent(o.offHoursPages / o.pages)} off-hours, ${percent(o.actionableShare)} of marked pages actionable.`}
+      takeaway={`${count(o.pages, "page")}, ${percent(o.offHoursPages / o.pages)} off-hours, ${percent(o.actionableShare)} of marked pages actionable.`}
     >
       <div className="charts">
         {o.byHour && (
@@ -289,7 +289,7 @@ export function Slos({ m }: { m: Metrics }) {
   return (
     <Section
       title="SLOs"
-      takeaway={`${slos.length} SLOs, ${atRisk ? `${atRisk} burning or exhausted` : "none burning"}. Least budget left: ${ranked[0]?.service}.`}
+      takeaway={`${count(slos.length, "SLO")}, ${atRisk ? `${atRisk} burning or exhausted` : "none burning"}.${slos.length > 1 ? ` Least budget left: ${ranked[0]?.service}.` : ""}`}
     >
       <div className="charts">
         {ranked.map((s) => {
@@ -350,7 +350,7 @@ export function Teams({
   return (
     <Section
       title="Teams"
-      takeaway={`${kids.length} teams. Most incidents: ${names.get(busiest?.orgId ?? "") ?? busiest?.orgId}.`}
+      takeaway={`${count(kids.length, "team")}. Most incidents: ${names.get(busiest?.orgId ?? "") ?? busiest?.orgId}.`}
     >
       <p className="muted">Select a team to open it.</p>
       <Table
@@ -389,7 +389,7 @@ export function Support({ m }: { m: Metrics }) {
   return (
     <Section
       title="Support"
-      takeaway={`${s.requests} requests. Median first response: ${minutes(s.firstResponse?.medianMinutes)}. Resolved: ${percent(s.resolutionRate)}.`}
+      takeaway={`${count(s.requests, "request")}. Median first response: ${minutes(s.firstResponse?.medianMinutes)}. Resolved: ${percent(s.resolutionRate)}.`}
     />
   );
 }

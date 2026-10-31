@@ -1,4 +1,7 @@
 const DAY = 86_400_000;
+
+/** The window presets, in complete weeks. The demo exporter exports exactly these. */
+export const PRESETS = [4, 8, 13];
 const iso = (x: Date) => x.toISOString().slice(0, 10);
 
 /** A fixed window of the last `weeks` COMPLETE ISO weeks (Monday to Monday, UTC).

@@ -1,7 +1,7 @@
 # One entry point for local work. CI runs the same steps as separate jobs, plus the breaking-change check on PRs.
 NODE_OK := $(shell node -e 'const [a,b]=process.versions.node.split(".").map(Number);process.exit(a>22||(a===22&&b>=12)?0:1)' 2>/dev/null && echo yes)
 
-.PHONY: setup api web demo test lint schema demo-data check clean
+.PHONY: setup api web demo demo-build test lint schema demo-data check clean
 
 setup:                 ## install backend (uv) and frontend (npm) deps from the lockfiles
 	cd backend && uv sync --frozen
@@ -17,6 +17,13 @@ web:                   ## frontend on :5173, proxies /graphql to :8000
 demo:                  ## API on the demo data plus the UI, in one terminal; Ctrl-C stops both
 	@(cd backend && INSIGHTS_DATA=data/demo.json exec uv run uvicorn insights.app:app --port 8000 --app-dir src) & \
 	trap 'kill $$! 2>/dev/null' EXIT; cd frontend && npm run dev
+
+BASE ?= /
+AS_OF = $(shell cd backend && uv run python -c 'from insights.demo_data import AS_OF; print(AS_OF.isoformat())')
+
+demo-build:            ## static demo in frontend/dist that needs no API; BASE=/sub/folder/ when served from one
+	cd backend && uv run python -m insights.export_demo
+	cd frontend && VITE_BASE=$(BASE) VITE_DEMO_AS_OF=$(AS_OF) npm run build
 
 schema:                ## regenerate the contract and the frontend types after a schema change
 	cd backend && uv run python -m insights.export_schema
@@ -41,4 +48,4 @@ check: lint test       ## everything CI checks, including contract drift
 	cd frontend && npm run build
 
 clean:
-	rm -rf backend/.venv frontend/node_modules frontend/dist
+	rm -rf backend/.venv frontend/node_modules frontend/dist frontend/public/demo
