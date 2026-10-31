@@ -9,6 +9,7 @@ const config: CodegenConfig = {
   generates: {
     "src/gql/": {
       preset: "client",
+      presetConfig: { persistedDocuments: true },
       config: { scalars: { Date: "string", DateTime: "string" }, enumsAsTypes: true, useTypeImports: true },
     },
   },

@@ -1,0 +1,56 @@
+name: pages
+# The static demo on GitHub Pages: main at the site root, each pull request at /pr-<n>/.
+# The site is served only while the repo is public (Pages on a private repo needs a paid plan).
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+permissions:
+  contents: write # push to the gh-pages branch
+  pull-requests: write # comment the preview link
+concurrency:
+  group: pages # one push to gh-pages at a time
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # Fork pull requests get a read-only token, so they can't publish a preview.
+    if: >-
+      github.event.action != 'closed' &&
+      (github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    env:
+      FOLDER: ${{ github.event_name == 'push' && '.' || format('pr-{0}', github.event.number) }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.2
+      - uses: actions/setup-node@v7
+        with: { node-version-file: frontend/.nvmrc, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: make setup
+      - name: Build the demo (the exporter fails on any GraphQL error)
+        run: |
+          base="/${GITHUB_REPOSITORY#*/}/"
+          [ "$FOLDER" = . ] || base="$base$FOLDER/"
+          make demo-build BASE="$base"
+      - run: scripts/publish-pages.sh "$FOLDER" frontend/dist
+      - name: Link
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.number }}
+          PRIVATE: ${{ github.event.repository.private }}
+        run: |
+          url="https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}/"
+          [ "$FOLDER" = . ] || url="$url$FOLDER/"
+          echo "Demo: $url" >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$PR" ] && [ "$PRIVATE" = false ]; then
+            gh pr comment "$PR" --edit-last --body "Preview: $url" 2>/dev/null || gh pr comment "$PR" --body "Preview: $url"
+          fi
+
+  remove-preview:
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with: { ref: "${{ github.event.repository.default_branch }}" }
+      - run: scripts/publish-pages.sh "pr-${{ github.event.number }}"
