@@ -97,6 +97,7 @@ th { font-weight: 600; }
 .link { background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
 
 .heading { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; }
+.heading > p { margin: 0; }
 .info > summary { list-style: none; margin: 0; display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 24px; }
 .info > summary::-webkit-details-marker { display: none; }
 .info[open] { flex-basis: 100%; }

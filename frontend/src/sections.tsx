@@ -76,7 +76,12 @@ export function Freshness({ syncs }: { syncs: Metrics["syncs"] }) {
     .reduce<string | null>((a, b) => (b && (!a || Date.parse(b) > Date.parse(a)) ? b : a), null);
   return (
     <div role="status">
-      {newest && <p>Data updated {dateTime(newest)}.</p>}
+      <div className="heading">
+        {newest && <p>Data updated {dateTime(newest)}.</p>}
+        <Info label="data sources">
+          Each source records its last successful sync. A source with none in 26 hours is marked stale.
+        </Info>
+      </div>
       <ul className="syncs" aria-label="Data sources">
         {syncs.map((s) => (
           <li key={s.stream}>
@@ -92,10 +97,6 @@ export function Freshness({ syncs }: { syncs: Metrics["syncs"] }) {
         ))}
       </ul>
       {stale.length > 0 && <p>Numbers from stale sources may read low.</p>}
-      <Info label="data sources">
-        Each source records its last successful sync. A source with none in 26 hours is stale, and its numbers may read
-        low.
-      </Info>
     </div>
   );
 }
