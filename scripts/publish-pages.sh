@@ -7,6 +7,7 @@
 set -euo pipefail
 folder=$1 built=${2:-}
 action=$([ -n "$built" ] && echo Publish || echo Remove)
+[ "$folder" != . ] || [ -n "$built" ] || { echo "refusing to remove the site root" >&2; exit 1; }
 work=$(mktemp -d)
 trap 'git worktree remove --force "$work" 2>/dev/null || true' EXIT
 
@@ -16,12 +17,14 @@ else
   git worktree add --quiet --orphan -b gh-pages "$work"  # first publish
 fi
 
-if [ -z "$built" ]; then
-  rm -rf "${work:?}/$folder"
-elif [ "$folder" = . ]; then
-  rsync -a --delete --exclude '/pr-*/' --exclude /.git "$built/" "$work/"
+# Clear, then copy fresh, so git compares content. (A size-and-time copy like rsync's default can
+# skip a rebuilt index.html with the same length and second, and publish one that points at deleted assets.)
+if [ "$folder" = . ]; then
+  find "$work" -mindepth 1 -maxdepth 1 ! -name .git ! -name 'pr-*' -exec rm -rf {} +
+  cp -R "$built/." "$work/"
 else
-  mkdir -p "$work/$folder" && rsync -a --delete "$built/" "$work/$folder/"
+  rm -rf "${work:?}/$folder"
+  [ -z "$built" ] || cp -R "$built" "$work/$folder"
 fi
 touch "$work/.nojekyll"  # serve files as built; skip GitHub's Jekyll step
 
