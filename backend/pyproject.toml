@@ -3,6 +3,7 @@ name = "insights"
 version = "0.1.0"
 description = "Reliability insights API: incident, delivery, on-call, and support metrics over GraphQL."
 requires-python = ">=3.11"
+license = "MIT"
 dependencies = [
   "fastapi>=0.115,<1",
   "strawberry-graphql[fastapi]>=0.260,<1",

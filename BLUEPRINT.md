@@ -2,7 +2,7 @@
 
 A from-scratch design for a dashboard that shows engineering teams and their
 leaders how reliable their services are and what their operational load costs,
-built on public tools. The working reference implementation is in this folder;
+built on public tools. The working reference implementation is in this repo;
 this document is the reasoning behind it and the plan for growing it.
 
 ## 1. What it answers
@@ -89,7 +89,7 @@ Conventions for every metric:
 
 ### Normalized records (`models.py`)
 
-`Incident`, `Deploy`, `Page`, `SupportRequest`, `Org`. Vendor fields stop at the
+`Incident`, `Deploy`, `Page`, `SupportRequest`, `Org`, `Slo`, `SliDaily`. Vendor fields stop at the
 connector. Keep `None` meaning "unknown"; never encode unknown as `False` or `0`.
 
 ### Writing a connector
@@ -204,7 +204,8 @@ the field, and the whole query fails.
 | Service | Rollups, dedupe, staleness, bad windows | `test_service.py` |
 | API | Real HTTP through FastAPI: shapes, nulls, errors that don't null siblings | `test_graphql.py` |
 | Contract | Drift, non-null budget, breaking changes | `test_schema_contract.py`, `check_breaking.py` |
-| UI | Renders null as "Not enough data", stale banner, unknown org | `Dashboard.test.tsx` |
+| Demo data | The generator reproduces the committed file; each story beat shows through the service | `test_demo_data.py`, `test_export_demo.py` |
+| UI | Each section's render, empty, and failed state; charts by keyboard and as tables; axe | `frontend/src/*.test.ts(x)` |
 | Reality | The query you changed, against the running API and real sources, across several orgs | Manual before every PR (`make api`) |
 
 Two rules that matter more than coverage:
@@ -238,7 +239,7 @@ Two rules that matter more than coverage:
 
 | Phase | Scope |
 |---|---|
-| 0. Skeleton (this repo) | Fixture data, metrics, contract tests, dashboard |
+| 0. Reference (this repo) | Seeded demo data, delivery (DORA), incident, on-call, and SLO metrics, contract tests, dashboard, static demo |
 | 1. First real source | One incident-tool connector, Postgres store, sync state, staleness alerts |
 | 2. Coverage | Pages and deploys; coverage view; org tree from the service catalog with overrides |
 | 3. Support | Support connector with bot exclusion; first-response and resolution with caveats |
