@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: backend } }
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with: { fetch-depth: 0 }
-      - uses: astral-sh/setup-uv@v10.3.2
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
       - run: uv sync --frozen
       - run: uv run ruff check . && uv run ruff format --check .
       - run: uv run pytest -q
@@ -35,8 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: frontend } }
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with: { node-version-file: frontend/.nvmrc, cache: npm, cache-dependency-path: frontend/package-lock.json }
       - run: npm ci
       - name: Generated types match the contract
