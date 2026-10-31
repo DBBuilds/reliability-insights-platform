@@ -13,6 +13,19 @@ test("freshness names stale sources with their last sync, and says what that mea
   expect(screen.getByRole("status")).toHaveTextContent("support: stale since Oct 14, 03:00 UTC");
   expect(screen.getByText("incidents: synced")).toBeInTheDocument();
   expect(screen.getByText("Numbers from stale sources may read low.")).toBeInTheDocument();
+  expect(screen.getByText("Data updated Oct 26, 04:00 UTC.")).toBeInTheDocument(); // the newest sync
+});
+
+test("every metric explains itself behind a labeled toggle", () => {
+  render(<Delivery m={metrics} previous={previous} />);
+  expect(screen.getByLabelText("About change failure rate")).toBeInTheDocument();
+  expect(
+    screen.getByText(/deploys linked to at least one incident; a deploy that caused two counts once/),
+  ).toBeInTheDocument();
+  for (const Part of [Reliability, OnCall, Slos, Support]) render(<Part m={metrics} />);
+  for (const name of ["reliability", "on-call", "SLOs", "support"]) {
+    expect(screen.getByLabelText(`About ${name}`)).toBeInTheDocument();
+  }
 });
 
 test("a source that never synced says so", () => {

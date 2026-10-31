@@ -95,3 +95,10 @@ th { font-weight: 600; }
 .meter { height: 8px; border-radius: 4px; background: var(--heat-0); overflow: hidden; }
 .meter > div { height: 100%; background: var(--tone, var(--series-1)); }
 .link { background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+
+.heading { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; }
+.info > summary { list-style: none; margin: 0; display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 24px; }
+.info > summary::-webkit-details-marker { display: none; }
+.info[open] { flex-basis: 100%; }
+.info[open] > summary { margin: 0; }
+.info p { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); max-width: 65ch; }
