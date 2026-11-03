@@ -51,16 +51,6 @@ export function shortDate(isoDate: string): string {
   });
 }
 
-/** "Oct 26, 2026" from an ISO date or date-time, in UTC. */
-export function fullDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  });
-}
-
 /** "1 incident", "2 incidents". */
 export function count(n: number, noun: string): string {
   return `${n} ${n === 1 ? noun : `${noun}s`}`;

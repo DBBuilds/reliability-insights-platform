@@ -1,10 +1,11 @@
 import { useQuery } from "@apollo/client/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dashboard } from "./Dashboard";
-import { fullDate, shortDate } from "./format";
+import { shortDate } from "./format";
 import type { OrgsQuery } from "./gql/graphql";
 import { ORGS } from "./queries";
 import { demoAsOf } from "./demo";
+import { urlForView, type View, viewFromUrl } from "./url";
 import { completeWeeks, PRESETS } from "./window";
 
 /** Orgs in tree order, each with its depth, so the picker can indent children under parents. */
@@ -23,11 +24,21 @@ export function orgTree(orgs: OrgsQuery["orgs"]): { id: string; name: string; de
 
 export function App() {
   const { data, loading, error } = useQuery(ORGS);
-  const [orgId, setOrgId] = useState("");
-  const [weeks, setWeeks] = useState(4);
-  const { start, end, previousStart } = completeWeeks(weeks, demoAsOf ? new Date(demoAsOf) : undefined);
+  // The org and window live in the URL, so any view can be bookmarked or shared; Back steps through them.
+  const [view, setView] = useState(() => viewFromUrl(window.location.search));
+  useEffect(() => {
+    const onBack = () => setView(viewFromUrl(window.location.search));
+    window.addEventListener("popstate", onBack);
+    return () => window.removeEventListener("popstate", onBack);
+  }, []);
+  const go = (change: Partial<View>) => {
+    const next = { ...view, ...change };
+    setView(next);
+    window.history.pushState(null, "", `${window.location.pathname}${urlForView(next)}`);
+  };
+  const { start, end, previousStart } = completeWeeks(view.weeks, demoAsOf ? new Date(demoAsOf) : undefined);
   const tree = orgTree(data?.orgs ?? []);
-  const selected = orgId || tree[0]?.id || "";
+  const selected = view.org || tree[0]?.id || "";
   const lastDay = new Date(Date.parse(`${end}T00:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
 
   return (
@@ -36,7 +47,7 @@ export function App() {
         <h1>Reliability Insights</h1>
         <label>
           Org{" "}
-          <select value={selected} onChange={(e) => setOrgId(e.target.value)} disabled={loading}>
+          <select value={selected} onChange={(e) => go({ org: e.target.value })} disabled={loading}>
             {tree.map((o) => (
               <option key={o.id} value={o.id}>
                 {"   ".repeat(o.depth)}
@@ -47,7 +58,7 @@ export function App() {
         </label>
         <label>
           Window{" "}
-          <select value={weeks} onChange={(e) => setWeeks(Number(e.target.value))}>
+          <select value={view.weeks} onChange={(e) => go({ weeks: Number(e.target.value) })}>
             {PRESETS.map((w) => (
               <option key={w} value={w}>
                 Last {w} complete weeks
@@ -58,7 +69,7 @@ export function App() {
         <span className="muted">
           {shortDate(start)} to {shortDate(lastDay)}, UTC
         </span>
-        {demoAsOf && <strong>Demo data as of {fullDate(demoAsOf)}</strong>}
+        {demoAsOf && <strong>Demo with synthetic data</strong>}
       </header>
       {error && <p role="alert">Could not load orgs: {error.message}</p>}
       {selected && (
@@ -68,7 +79,7 @@ export function App() {
           end={end}
           previousStart={previousStart}
           names={new Map(tree.map((o) => [o.id, o.name]))}
-          onSelectOrg={setOrgId}
+          onSelectOrg={(org) => go({ org })}
         />
       )}
     </main>
