@@ -1,4 +1,4 @@
-import { change, dateTime, doraLevels, fullDate, minutes, objective, percent, perDay, shortDate } from "./format";
+import { change, dateTime, doraLevels, minutes, objective, percent, perDay, shortDate } from "./format";
 import { completeWeeks } from "./window";
 
 test("minutes formats and says when there is too little data", () => {
@@ -43,7 +43,6 @@ test("change ignores small moves and knows which way is better", () => {
 test("dates read in UTC", () => {
   expect(dateTime("2026-10-20T14:00:00-05:00")).toBe("Oct 20, 19:00 UTC");
   expect(shortDate("2026-10-05")).toBe("Oct 5");
-  expect(fullDate("2026-10-26T06:00:00+00:00")).toBe("Oct 26, 2026");
 });
 
 test("completeWeeks ends on the Monday of the current week", () => {

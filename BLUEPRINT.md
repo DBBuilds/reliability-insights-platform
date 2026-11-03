@@ -164,6 +164,7 @@ Rules, and how this repo enforces them:
 | New fields are nullable | `test_no_unreviewed_non_null_fields` against `schema/non_null_fields.txt` |
 | No breaking change vs. main | `scripts/check_breaking.py` in CI (graphql-core `find_breaking_changes`) |
 | Frontend merges after backend is in prod | Process. Check prod with a real request before merging the frontend PR |
+| An `id` names one record everywhere, or its type opts out of cache merging | The client cache merges objects with the same type and `id`. `Insight` and `SloMetrics` ids repeat across orgs and windows, so `apollo.ts` stores them per report (`keyFields: false`); a Dashboard test switches orgs and back |
 
 Note: graphql-core does **not** count an output field going nullable to non-null
 as breaking (it's type-safe for clients). It is a runtime risk, which is why the

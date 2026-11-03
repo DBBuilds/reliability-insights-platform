@@ -26,11 +26,32 @@ export function Badge({ value, label = sentence(value) }: { value: string; label
   return <span className={`badge tone-${TONES[value] ?? "none"}`}>{label}</span>;
 }
 
-export function Section(props: { title: string; takeaway: ReactNode; children?: ReactNode; open?: boolean }) {
+/** A definition behind a small toggle. Native <details>, so it works by keyboard and touch, not only hover. */
+export function Info({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <details className="info">
+      <summary aria-label={`About ${label}`}>ⓘ</summary>
+      <p>{children}</p>
+    </details>
+  );
+}
+
+const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0]?.toLowerCase() + s.slice(1) : s);
+
+export function Section(props: {
+  title: string;
+  takeaway: ReactNode;
+  info?: ReactNode;
+  children?: ReactNode;
+  open?: boolean;
+}) {
   const id = useId();
   return (
     <section className="section" aria-labelledby={id}>
-      <h2 id={id}>{props.title}</h2>
+      <div className="heading">
+        <h2 id={id}>{props.title}</h2>
+        {props.info && <Info label={lowerFirst(props.title)}>{props.info}</Info>}
+      </div>
       {props.children ? (
         <details open={props.open}>
           <summary>{props.takeaway}</summary>
@@ -50,8 +71,17 @@ const week = (w: { weekStart: string | null; partial: boolean | null }) =>
 export function Freshness({ syncs }: { syncs: Metrics["syncs"] }) {
   if (!syncs) return <p>Sync status could not load.</p>;
   const stale = syncs.filter((s) => s.stale);
+  const newest = syncs
+    .map((s) => s.lastSyncedAt)
+    .reduce<string | null>((a, b) => (b && (!a || Date.parse(b) > Date.parse(a)) ? b : a), null);
   return (
     <div role="status">
+      <div className="heading">
+        {newest && <p>Data updated {dateTime(newest)}.</p>}
+        <Info label="data sources">
+          Each source records its last successful sync. A source with none in 26 hours is marked stale.
+        </Info>
+      </div>
       <ul className="syncs" aria-label="Data sources">
         {syncs.map((s) => (
           <li key={s.stream}>
@@ -96,11 +126,15 @@ function Tile(props: {
   levels?: readonly string[] | null;
   delta: ReturnType<typeof change>;
   trend?: (number | null)[];
+  about: ReactNode;
 }) {
   const level = doraLevels(props.levels);
   return (
     <div className="tile">
-      <span className="muted">{props.label}</span>
+      <div className="heading">
+        <span className="muted">{props.label}</span>
+        <Info label={props.label.toLowerCase()}>{props.about}</Info>
+      </div>
       <span className="value">{props.value}</span>
       {level && <span>{level}</span>}
       {props.delta && (
@@ -123,10 +157,17 @@ export function Delivery({ m, previous }: { m: Metrics; previous: Previous }) {
   const weeks = m.weekly ?? [];
   return (
     <section className="section" aria-label="Delivery (DORA)">
-      <h2>Delivery (DORA)</h2>
+      <div className="heading">
+        <h2>Delivery (DORA)</h2>
+        <Info label="DORA levels">
+          Levels are the 2024 DORA report's survey clusters, not targets. A value between published ranges has no level.
+          A change against the previous period shows at 10% or more.
+        </Info>
+      </div>
       <div className="tiles">
         <Tile
           label="Deploys per service"
+          about="Deploys per day for the median service, among services that deployed in the window. Per service, because DORA levels describe one service. Source: deploy records."
           value={perDay(d.deployFrequency?.value)}
           levels={d.deployFrequency?.levels2024}
           delta={change(d.deployFrequency?.value, p?.deployFrequency?.value, false)}
@@ -134,6 +175,7 @@ export function Delivery({ m, previous }: { m: Metrics; previous: Previous }) {
         />
         <Tile
           label="Lead time"
+          about="Median time from commit to production deploy, for deploys with a commit time. Source: deploy records."
           value={minutes(d.leadTime?.value)}
           levels={d.leadTime?.levels2024}
           delta={change(d.leadTime?.value, p?.leadTime?.value, true)}
@@ -141,12 +183,14 @@ export function Delivery({ m, previous }: { m: Metrics; previous: Previous }) {
         />
         <Tile
           label="Change failure rate"
+          about="Share of deploys linked to at least one incident; a deploy that caused two counts once, and incidents no deploy caused don't count. Source: deploy and incident records."
           value={percent(d.changeFailureRate)}
           delta={change(d.changeFailureRate, p?.changeFailureRate, true)}
           trend={weeks.map((w) => w.changeFailureRate)}
         />
         <Tile
           label="Recovery from a failed deploy"
+          about="Median time from impact start to resolution, for incidents a deploy caused (DORA: failed deployment recovery time). Source: incident records."
           value={minutes(d.recoveryTime?.value)}
           levels={d.recoveryTime?.levels2024}
           delta={change(d.recoveryTime?.value, p?.recoveryTime?.value, true)}
@@ -169,6 +213,7 @@ export function Reliability({ m }: { m: Metrics }) {
   return (
     <Section
       title="Reliability"
+      info="Time to detect: impact start to the first alert or report. Time to resolve: impact start to the end of impact; open incidents are counted, not included. Medians, so one long incident can't dominate; under 3 samples shows as not enough data. Source: incident records."
       takeaway={`${count(i.total, "incident")}, ${i.open} open. Median time to resolve: ${minutes(i.timeToResolve?.medianMinutes)}.`}
     >
       <p>By severity: {severities}.</p>
@@ -259,6 +304,7 @@ export function OnCall({ m }: { m: Metrics }) {
   return (
     <Section
       title="On-call"
+      info="Off-hours: weekends, and before 09:00 or after 18:00 in the responder's local time. Actionable: share of pages marked actionable, among pages a responder marked at all. Source: paging records."
       takeaway={`${count(o.pages, "page")}, ${percent(o.offHoursPages / o.pages)} off-hours, ${percent(o.actionableShare)} of marked pages actionable.`}
     >
       <div className="charts">
@@ -289,6 +335,7 @@ export function Slos({ m }: { m: Metrics }) {
   return (
     <Section
       title="SLOs"
+      info="Error budget: the bad events the objective allows over the SLO's window. A burn rate of 1 spends it exactly over the window; burning means the last 3 days ran at 1 or more. Source: daily good and total event counts."
       takeaway={`${count(slos.length, "SLO")}, ${atRisk ? `${atRisk} burning or exhausted` : "none burning"}.${slos.length > 1 ? ` Least budget left: ${ranked[0]?.service}.` : ""}`}
     >
       <div className="charts">
@@ -389,6 +436,7 @@ export function Support({ m }: { m: Metrics }) {
   return (
     <Section
       title="Support"
+      info="First response: opened to the first human reply; bots are excluded. Resolved: share of requests closed. Source: support requests."
       takeaway={`${count(s.requests, "request")}. Median first response: ${minutes(s.firstResponse?.medianMinutes)}. Resolved: ${percent(s.resolutionRate)}.`}
     />
   );
