@@ -155,6 +155,7 @@ export function Delivery({ m, previous }: { m: Metrics; previous: Previous }) {
   if (!d) return failed("Delivery (DORA)");
   const p = previous?.delivery;
   const weeks = m.weekly ?? [];
+  const complete = weeks.filter((w) => !w.partial); // partial edge weeks always understate
   return (
     <section className="section" aria-label="Delivery (DORA)">
       <div className="heading">
@@ -171,7 +172,7 @@ export function Delivery({ m, previous }: { m: Metrics; previous: Previous }) {
           value={perDay(d.deployFrequency?.value)}
           levels={d.deployFrequency?.levels2024}
           delta={change(d.deployFrequency?.value, p?.deployFrequency?.value, false)}
-          trend={weeks.map((w) => w.deploys)}
+          trend={complete.map((w) => w.deploys)}
         />
         <Tile
           label="Lead time"
@@ -179,14 +180,14 @@ export function Delivery({ m, previous }: { m: Metrics; previous: Previous }) {
           value={minutes(d.leadTime?.value)}
           levels={d.leadTime?.levels2024}
           delta={change(d.leadTime?.value, p?.leadTime?.value, true)}
-          trend={weeks.map((w) => w.leadTime?.medianMinutes ?? null)}
+          trend={complete.map((w) => w.leadTime?.medianMinutes ?? null)}
         />
         <Tile
           label="Change failure rate"
           about="Share of deploys linked to at least one incident; a deploy that caused two counts once, and incidents no deploy caused don't count. Source: deploy and incident records."
           value={percent(d.changeFailureRate)}
           delta={change(d.changeFailureRate, p?.changeFailureRate, true)}
-          trend={weeks.map((w) => w.changeFailureRate)}
+          trend={complete.map((w) => w.changeFailureRate)}
         />
         <Tile
           label="Recovery from a failed deploy"
@@ -242,7 +243,8 @@ export function Reliability({ m }: { m: Metrics }) {
           tickUnit={60}
         />
         <Chart
-          title="Incidents per week"
+          title={weeks.some((w) => w.partial) ? "Incidents per week (partial weeks faded)" : "Incidents per week"}
+          faded={weeks.map((w) => Boolean(w.partial))}
           kind="columns"
           x={weeks.map(week)}
           series={[{ name: "Incidents", values: weeks.map((w) => w.incidents), color: "var(--series-1)" }]}

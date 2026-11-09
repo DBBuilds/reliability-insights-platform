@@ -18,7 +18,7 @@ export function demoKey(operation: string, variables: Record<string, unknown>): 
 const missing = {
   errors: [
     {
-      message: `This demo has no data for that choice. It covers the orgs in the menu over the last ${PRESETS.join(", ").replace(/, (\d+)$/, ", or $1")} complete weeks.`,
+      message: `This demo has no data for that choice. It covers the orgs in the menu over the last ${PRESETS.join(", ").replace(/, (\d+)$/, ", or $1")} days.`,
     },
   ],
 };

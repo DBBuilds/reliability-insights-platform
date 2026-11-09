@@ -55,3 +55,18 @@ test("the heatmap reads out a hovered cell and lists every cell in its table", (
 test("a sparkline needs two points", () => {
   expect(render(<Sparkline values={[null, 3]} />).container).toBeEmptyDOMElement();
 });
+
+test("partial weeks are faded, not dropped, so the bars still add up to the total", () => {
+  const { container } = render(
+    <Chart
+      title="Incidents"
+      kind="columns"
+      x={["a", "b"]}
+      series={[{ name: "n", values: [2, 3], color: "red" }]}
+      faded={[true, false]}
+      format={String}
+    />,
+  );
+  const bars = container.querySelectorAll("svg path");
+  expect([...bars].map((b) => b.getAttribute("opacity"))).toEqual(["0.4", null]);
+});

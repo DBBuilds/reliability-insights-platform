@@ -58,12 +58,15 @@ Conventions for every metric:
   "Not enough data". Default minimum: 3.
 - **Open items are excluded from durations and counted separately.** Dropping them
   silently makes a team that never closes anything look fast.
-- **Fixed windows `[start, end)` with explicit dates.** Rolling "last N days"
-  windows move between two reads and manufacture fake changes. The UI's default is
-  the last 4 complete ISO weeks.
-- **Edge weeks are flagged partial.** They always understate; compare complete weeks.
-- **Percent change needs a minimum sample and a minimum delta** before it becomes an
-  insight, so 2 to 3 incidents never headlines as "50% worse".
+- **Fixed windows `[start, end)` with explicit dates.** Windows anchored to the
+  moment of reading move between two reads and manufacture fake changes. The UI
+  offers the last 30, 90, 180, or 365 complete UTC days (default 30), or a custom
+  range of up to 366 days; the previous period is the same length just before.
+- **Edge weeks are flagged partial.** They always understate: weekly counts fade
+  them, sparklines leave them out; compare complete weeks.
+- **Percent change needs a minimum sample, a minimum delta, and for medians a rank
+  test** (Mann-Whitney U, p < 0.05) before it becomes an insight. Medians of a dozen
+  heavy-tailed durations move 25% by chance about half the time.
 
 | Metric | Definition | Includes | Watch out for |
 |---|---|---|---|

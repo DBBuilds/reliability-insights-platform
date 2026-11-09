@@ -121,3 +121,16 @@ test("support is one line", () => {
   expect(screen.getByText("117 requests. Median first response: 25 min. Resolved: 89%.")).toBeInTheDocument();
   loadFailure(<Support m={without("support")} />);
 });
+
+test("delivery sparklines skip partial edge weeks, which always understate", () => {
+  const weekly = [{ ...metrics.weekly![0]!, weekStart: "2026-09-21", partial: true, deploys: 1 }, ...metrics.weekly!];
+  const { container } = render(<Delivery m={{ ...metrics, weekly }} previous={previous} />);
+  const points = container.querySelector(".tile polyline")?.getAttribute("points")?.split(" ") ?? [];
+  expect(points).toHaveLength(metrics.weekly!.length); // the 4 complete weeks, not 5
+});
+
+test("the weekly incident chart says partial weeks are faded", () => {
+  const weekly = [{ ...metrics.weekly![0]!, weekStart: "2026-09-21", partial: true }, ...metrics.weekly!];
+  render(<Reliability m={{ ...metrics, weekly }} />);
+  expect(screen.getByText("Incidents per week (partial weeks faded)")).toBeInTheDocument();
+});
