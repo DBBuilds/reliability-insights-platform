@@ -1,10 +1,12 @@
 import json
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 
 import pytest
 from graphql import parse
 
-from insights import export_demo
+from insights import demo_data, export_demo
+from insights.service import InsightsService
+from insights.sources.fixtures import FixtureSource
 
 
 def test_key_matches_the_frontend():
@@ -14,11 +16,12 @@ def test_key_matches_the_frontend():
     assert export_demo.key("Orgs", {}) == "Orgs"
 
 
-def test_windows_are_the_complete_weeks_before_the_snapshot():
+def test_windows_are_the_complete_days_before_the_snapshot():
     assert export_demo.windows(datetime(2026, 10, 26, 6, tzinfo=UTC)) == [
-        {"start": "2026-09-28", "end": "2026-10-26", "previousStart": "2026-08-31"},
-        {"start": "2026-08-31", "end": "2026-10-26", "previousStart": "2026-07-06"},
-        {"start": "2026-07-27", "end": "2026-10-26", "previousStart": "2026-04-27"},
+        {"start": "2026-09-26", "end": "2026-10-26", "previousStart": "2026-08-27"},
+        {"start": "2026-07-28", "end": "2026-10-26", "previousStart": "2026-04-29"},
+        {"start": "2026-04-29", "end": "2026-10-26", "previousStart": "2025-10-31"},
+        {"start": "2025-10-26", "end": "2026-10-26", "previousStart": "2024-10-26"},
     ]
 
 
@@ -26,9 +29,11 @@ def test_exports_every_frontend_operation_for_every_org_and_window(tmp_path):
     written = export_demo.export(tmp_path)
     operations = json.loads(export_demo.OPERATIONS.read_text()).values()
     assert {k.split("/")[0] for k in written} == {parse(text).definitions[0].name.value for text in operations}
-    assert len(written) == 1 + 6 * 3  # Orgs, plus 6 orgs x 3 windows
-    eng = json.loads((tmp_path / "OrgMetrics/2026-10-26_eng_2026-04-27_2026-07-27.json").read_text())
-    assert eng["data"]["orgMetrics"]["incidents"]["total"] == 68  # the same number the live API returns
+    assert len(written) == 1 + 6 * 4  # Orgs, plus 6 orgs x 4 windows
+    eng = json.loads((tmp_path / "OrgMetrics/2026-10-26_eng_2026-04-29_2026-07-28.json").read_text())
+    source = FixtureSource(demo_data.TARGET)
+    api = InsightsService(source, now=source.as_of).report("eng", date(2026, 7, 28), date(2026, 10, 26))
+    assert eng["data"]["orgMetrics"]["incidents"]["total"] == api.incidents_total  # the number the live API returns
 
 
 @pytest.mark.parametrize(

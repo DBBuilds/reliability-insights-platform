@@ -22,7 +22,7 @@ from insights.sources.fixtures import FixtureSource
 ROOT = Path(__file__).resolve().parents[3]
 OPERATIONS = ROOT / "frontend" / "src" / "gql" / "persisted-documents.json"  # written by codegen
 OUT = ROOT / "frontend" / "public" / "demo"
-WEEKS = (4, 8, 13)  # the dashboard's window presets
+DAYS = (30, 90, 180, 365)  # the dashboard's window presets
 
 
 def key(operation: str, variables: dict[str, str]) -> str:
@@ -31,12 +31,11 @@ def key(operation: str, variables: dict[str, str]) -> str:
 
 
 def windows(as_of: datetime) -> list[dict[str, str]]:
-    """The last N complete ISO weeks before `as_of`, like the frontend's completeWeeks()."""
-    day = as_of.astimezone(UTC).date()
-    end = day - timedelta(days=day.weekday())
+    """The last N complete UTC days before `as_of`, like the frontend's lastDays()."""
+    end = as_of.astimezone(UTC).date()
     return [
-        {"start": str(end - timedelta(weeks=n)), "end": str(end), "previousStart": str(end - timedelta(weeks=2 * n))}
-        for n in WEEKS
+        {"start": str(end - timedelta(days=n)), "end": str(end), "previousStart": str(end - timedelta(days=2 * n))}
+        for n in DAYS
     ]
 
 

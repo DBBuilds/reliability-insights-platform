@@ -89,9 +89,41 @@ def time_to_detect(incidents: Iterable[Incident]) -> DurationStat:
     return duration_stat(_minutes(i.started_at, i.detected_at) for i in incidents if i.detected_at)
 
 
+def resolve_minutes(incidents: Iterable[Incident]) -> list[float]:
+    """Impact start to resolution, for resolved incidents (open ones are counted separately)."""
+    return [_minutes(i.started_at, i.resolved_at) for i in incidents if i.resolved_at]
+
+
 def time_to_resolve(incidents: Iterable[Incident]) -> DurationStat:
-    """MTTR: impact start to resolution, resolved incidents only (open ones are counted separately)."""
-    return duration_stat(_minutes(i.started_at, i.resolved_at) for i in incidents if i.resolved_at)
+    """MTTR as a median and p90 of resolve_minutes."""
+    return duration_stat(resolve_minutes(incidents))
+
+
+def rank_test_p(a: Sequence[float], b: Sequence[float]) -> float | None:
+    """Two-sided Mann-Whitney U test, normal approximation with a tie correction: how likely samples this
+    far apart are if both came from the same distribution. Small p means a real difference. None if empty.
+
+    Durations are heavy-tailed, so medians of a dozen incidents move 25% by chance about half the time.
+    """
+    n1, n2 = len(a), len(b)
+    if not n1 or not n2:
+        return None
+    ordered = sorted([(v, 0) for v in a] + [(v, 1) for v in b])
+    rank_sum_a, ties, i = 0.0, 0, 0
+    while i < len(ordered):
+        j = i
+        while j + 1 < len(ordered) and ordered[j + 1][0] == ordered[i][0]:
+            j += 1
+        tied = j - i + 1
+        ties += tied**3 - tied
+        rank_sum_a += ((i + j) / 2 + 1) * sum(1 for _, side in ordered[i : j + 1] if side == 0)
+        i = j + 1
+    n = n1 + n2
+    variance = n1 * n2 / 12 * ((n + 1) - ties / (n * (n - 1)))
+    if variance <= 0:
+        return 1.0
+    z = abs(rank_sum_a - n1 * (n1 + 1) / 2 - n1 * n2 / 2) / math.sqrt(variance)
+    return math.erfc(z / math.sqrt(2))
 
 
 def open_count(incidents: Iterable[Incident]) -> int:

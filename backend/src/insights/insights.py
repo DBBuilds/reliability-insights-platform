@@ -29,9 +29,15 @@ class InsightItem:
 
 
 def mttr_trend(
-    current: DurationStat, previous: DurationStat, threshold_pct: float = 25.0, min_sample: int = 5
+    current: DurationStat,
+    previous: DurationStat,
+    p_value: float | None,
+    threshold_pct: float = 25.0,
+    min_sample: int = 5,
+    max_p: float = 0.05,
 ) -> InsightItem | None:
-    if min(current.sample_size, previous.sample_size) < min_sample:
+    """Median time to resolve moved at least 25%, and a rank test says chance doesn't explain it (p < 0.05)."""
+    if min(current.sample_size, previous.sample_size) < min_sample or p_value is None or p_value >= max_p:
         return None
     change = pct_change(current.median_minutes, previous.median_minutes)
     if change is None or abs(change) < threshold_pct:

@@ -157,7 +157,11 @@ class InsightsService:
         stale = [s for s, t in syncs.items() if t is None or now - t > STALE_AFTER]
         found = [
             rules.stale_sources(stale),
-            rules.mttr_trend(ttr, m.time_to_resolve(previous)),
+            rules.mttr_trend(
+                ttr,
+                m.time_to_resolve(previous),
+                m.rank_test_p(m.resolve_minutes(incidents), m.resolve_minutes(previous)),
+            ),
             rules.cfr_spike(
                 m.failed_deploys(deploys, incidents),
                 len(deploys),
