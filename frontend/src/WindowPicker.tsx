@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { View } from "./url";
-import { customRange, lastDayOf, monthRange, PRESETS, type Window } from "./window";
+import { customRange, lastDayOf, MAX_MONTHS, monthRange, PRESETS, type Window } from "./window";
 
 type Props = {
   view: View;
@@ -36,11 +36,20 @@ export function WindowPicker({ view, window, latest, months, onChange }: Props) 
     const next = { ...draft, ...change };
     apply(next, customRange(next.from, next.to, today));
   };
-  const editMonths = (change: { from?: string; to?: string }) => {
-    const [from, to] = [change.from ?? draft.from.slice(0, 7), change.to ?? draft.to.slice(0, 7)];
-    const result = monthRange(from, to);
-    const whole = (m: string) => monthRange(m, m) as { from: string; to: string };
-    apply(typeof result === "string" ? { from: whole(from).from, to: whole(to).to } : result, result);
+  // Moving one end of a month range pulls the other along (same order, at most MAX_MONTHS), so it never dead-ends.
+  const editMonths = (side: "from" | "to", month: string) => {
+    const list = months ?? [];
+    const at = (m: string) => Math.max(0, list.indexOf(m));
+    let [a, b] = [at(draft.from.slice(0, 7)), at(draft.to.slice(0, 7))];
+    if (side === "from") {
+      a = at(month);
+      b = Math.min(Math.max(b, a), a + MAX_MONTHS - 1);
+    } else {
+      b = at(month);
+      a = Math.max(Math.min(a, b), b - MAX_MONTHS + 1);
+    }
+    const result = monthRange(list[a] as string, list[b] as string);
+    if (typeof result !== "string") apply(result, result);
   };
   const startCustom = () => {
     const last = months?.at(-1);
@@ -71,7 +80,7 @@ export function WindowPicker({ view, window, latest, months, onChange }: Props) 
           {(["from", "to"] as const).map((side) => (
             <label key={side}>
               {side === "from" ? "From" : "To"}{" "}
-              <select value={draft[side].slice(0, 7)} onChange={(e) => editMonths({ [side]: e.target.value })}>
+              <select value={draft[side].slice(0, 7)} onChange={(e) => editMonths(side, e.target.value)}>
                 {months.map((m) => (
                   <option key={m} value={m}>
                     {monthLabel(m)}
