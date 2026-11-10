@@ -294,7 +294,7 @@ export function Sparkline({ values }: { values: (number | null)[] }) {
       <polyline
         points={points.map((p) => p.join(",")).join(" ")}
         fill="none"
-        stroke="var(--axis)"
+        stroke="var(--muted)" // a data line, so at least 3:1 on the card; --axis is for hairlines only
         strokeWidth={2}
         strokeLinejoin="round"
       />

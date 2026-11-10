@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Delivery, Freshness, Incidents, Insights, OnCall, Reliability, Slos, Support, Teams } from "./sections";
+import { Delivery, Freshness, Guard, Incidents, Insights, OnCall, Reliability, Slos, Support, Teams } from "./sections";
 import { metrics, previous } from "./test-fixtures";
 
 const without = (field: keyof typeof metrics) => ({ ...metrics, [field]: null });
@@ -133,4 +133,25 @@ test("the weekly incident chart says partial weeks are faded", () => {
   const weekly = [{ ...metrics.weekly![0]!, weekStart: "2026-09-21", partial: true }, ...metrics.weekly!];
   render(<Reliability m={{ ...metrics, weekly }} />);
   expect(screen.getByText("Incidents per week (partial weeks faded)")).toBeInTheDocument();
+});
+
+test("a section that failed to render tries again when its data changes", () => {
+  vi.spyOn(console, "error").mockImplementation(() => {});
+  const Boom = ({ ok }: { ok: boolean }) => {
+    if (!ok) throw new Error("bad payload");
+    return <p>Rendered</p>;
+  };
+  const { rerender } = render(
+    <Guard title="Teams" data={1}>
+      <Boom ok={false} />
+    </Guard>,
+  );
+  expect(screen.getByRole("region", { name: "Teams" })).toHaveTextContent("Could not load.");
+  rerender(
+    <Guard title="Teams" data={2}>
+      <Boom ok />
+    </Guard>,
+  );
+  expect(screen.getByText("Rendered")).toBeInTheDocument();
+  vi.restoreAllMocks();
 });

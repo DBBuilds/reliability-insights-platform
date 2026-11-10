@@ -70,3 +70,8 @@ test("partial weeks are faded, not dropped, so the bars still add up to the tota
   const bars = container.querySelectorAll("svg path");
   expect([...bars].map((b) => b.getAttribute("opacity"))).toEqual(["0.4", null]);
 });
+
+test("a sparkline's line uses the muted text color, not the hairline axis color (3:1 on the card)", () => {
+  const { container } = render(<Sparkline values={[1, 3, 2]} />);
+  expect(container.querySelector("polyline")).toHaveAttribute("stroke", "var(--muted)");
+});
