@@ -1,6 +1,6 @@
 // Dashboard sections. Each leads with a one-line takeaway; detail sits behind it, collapsed.
 // A section whose data is null failed to load and says so instead of showing zeros.
-import { type ReactNode, useId } from "react";
+import { Component, type ReactNode, useId } from "react";
 import { Chart, DataTable, Heatmap, Sparkline, Table } from "./charts";
 import { change, count, dateTime, doraLevels, minutes, objective, perDay, percent, shortDate } from "./format";
 import type { OrgMetricsQuery } from "./gql/graphql";
@@ -65,6 +65,20 @@ export function Section(props: {
 }
 
 const failed = (title: string) => <Section title={title} takeaway="Could not load." />;
+
+/** Catches a render error in one section, so the rest of the page still shows. Tries again when the data changes. */
+export class Guard extends Component<{ title: string; data: unknown; children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidUpdate(prev: { data: unknown }) {
+    if (this.state.failed && prev.data !== this.props.data) this.setState({ failed: false });
+  }
+  render() {
+    return this.state.failed ? failed(this.props.title) : this.props.children;
+  }
+}
 const week = (w: { weekStart: string | null; partial: boolean | null }) =>
   w.weekStart ? `${shortDate(w.weekStart)}${w.partial ? " (partial)" : ""}` : "";
 

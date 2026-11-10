@@ -4,6 +4,7 @@ import { Dashboard } from "./Dashboard";
 import { dateRange } from "./format";
 import type { OrgsQuery } from "./gql/graphql";
 import { ORGS } from "./queries";
+import { setTheme, storedTheme, THEMES, type Theme } from "./theme";
 import { demoAsOf } from "./demo";
 import { urlForView, type View, viewFromUrl } from "./url";
 import { WindowPicker } from "./WindowPicker";
@@ -27,6 +28,7 @@ export function App() {
   const { data, loading, error } = useQuery(ORGS);
   // The org and window live in the URL, so any view can be bookmarked or shared; Back steps through them.
   const [view, setView] = useState(() => viewFromUrl(window.location.search));
+  const [theme, pickTheme] = useState(storedTheme);
   useEffect(() => {
     const onBack = () => setView(viewFromUrl(window.location.search));
     window.addEventListener("popstate", onBack);
@@ -73,7 +75,26 @@ export function App() {
         </label>
         <WindowPicker view={view} window={current} latest={latestDay(today)} months={months} onChange={go} />
         <span className="muted">{dateRange(start, lastDayOf(current))}, UTC</span>
-        {demoAsOf && <strong>Demo with synthetic data</strong>}
+        <div className="aside">
+          {demoAsOf && <strong>Demo with synthetic data</strong>}
+          <label>
+            Theme{" "}
+            <select
+              value={theme}
+              onChange={(e) => {
+                const next = e.target.value as Theme;
+                setTheme(next);
+                pickTheme(next);
+              }}
+            >
+              {THEMES.map((t) => (
+                <option key={t} value={t}>
+                  {t[0]?.toUpperCase() + t.slice(1)}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
       </header>
       {error && <p role="alert">Could not load orgs: {error.message}</p>}
       {selected && (

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client/react";
 import { ORG_METRICS } from "./queries";
-import { Delivery, Freshness, Incidents, Insights, OnCall, Reliability, Slos, Support, Teams } from "./sections";
+import { Delivery, Freshness, Guard, Incidents, Insights, OnCall, Reliability, Slos, Support, Teams } from "./sections";
 
 type Props = {
   orgId: string;
@@ -24,15 +24,33 @@ export function Dashboard({ orgId, start, end, previousStart, names, onSelectOrg
 
   return (
     <div className={loading ? "refreshing" : undefined} aria-busy={loading}>
-      <Freshness syncs={m.syncs} />
-      <Insights insights={m.insights} staleShown={staleShown} />
-      <Delivery m={m} previous={shown.previous} />
-      <Reliability m={m} />
-      <Incidents m={m} />
-      <OnCall m={m} />
-      <Slos m={m} />
-      <Teams m={m} names={names} onSelect={onSelectOrg} />
-      <Support m={m} />
+      <Guard title="Data sources" data={m}>
+        <Freshness syncs={m.syncs} />
+      </Guard>
+      <Guard title="Insights" data={m}>
+        <Insights insights={m.insights} staleShown={staleShown} />
+      </Guard>
+      <Guard title="Delivery (DORA)" data={m}>
+        <Delivery m={m} previous={shown.previous} />
+      </Guard>
+      <Guard title="Reliability" data={m}>
+        <Reliability m={m} />
+      </Guard>
+      <Guard title="Incidents" data={m}>
+        <Incidents m={m} />
+      </Guard>
+      <Guard title="On-call" data={m}>
+        <OnCall m={m} />
+      </Guard>
+      <Guard title="SLOs" data={m}>
+        <Slos m={m} />
+      </Guard>
+      <Guard title="Teams" data={m}>
+        <Teams m={m} names={names} onSelect={onSelectOrg} />
+      </Guard>
+      <Guard title="Support" data={m}>
+        <Support m={m} />
+      </Guard>
     </div>
   );
 }

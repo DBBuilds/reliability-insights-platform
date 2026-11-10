@@ -86,3 +86,11 @@ test("unknown org renders a message, not a crash", async () => {
   renderWith({ orgMetrics: null, previous: null });
   expect(await screen.findByRole("alert")).toHaveTextContent("Unknown org.");
 });
+
+test("a section that fails to render says so, and the rest of the page still shows", async () => {
+  vi.spyOn(console, "error").mockImplementation(() => {}); // React reports the caught error
+  renderWith({ orgMetrics: { ...metrics, incidents: { ...metrics.incidents, bySeverity: null } }, previous });
+  expect(await screen.findByRole("region", { name: "Reliability" })).toHaveTextContent("Could not load.");
+  expect(screen.getByRole("region", { name: "SLOs" })).toBeInTheDocument();
+  vi.restoreAllMocks();
+});
