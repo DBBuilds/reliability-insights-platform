@@ -4,7 +4,7 @@ from datetime import UTC, date, datetime
 import pytest
 
 from insights.models import SliDaily, Slo
-from insights.sources.fixtures import FixtureSource
+from insights.sources.fixtures import DEFAULT_PATH, FixtureSource
 
 OCT_1, OCT_2 = datetime(2026, 10, 1, tzinfo=UTC), datetime(2026, 10, 2, tzinfo=UTC)
 
@@ -68,3 +68,26 @@ def test_timestamps_need_an_offset(tmp_path):
 def test_slo_records_reject_impossible_values(make):
     with pytest.raises(ValueError):
         make()
+
+
+@pytest.mark.parametrize("path", ["sample.json", "demo.json"])
+def test_window_lookups_match_a_full_scan_in_file_order(path):
+    # The source indexes records for speed; results must equal a plain scan, order included.
+    import random
+
+    source = FixtureSource(DEFAULT_PATH.parent / path)
+    lookups = [
+        (source.incidents, source._incidents, "started_at"),
+        (source.deploys, source._deploys, "deployed_at"),
+        (source.pages, source._pages, "fired_at"),
+        (source.support_requests, source._support, "opened_at"),
+    ]
+    rng = random.Random(7)
+    lo, hi = datetime(2024, 10, 1, tzinfo=UTC).timestamp(), datetime(2026, 11, 1, tzinfo=UTC).timestamp()
+    for _ in range(200):
+        a, b = sorted(rng.uniform(lo, hi) for _ in range(2))
+        start, end = datetime.fromtimestamp(a, UTC), datetime.fromtimestamp(b, UTC)
+        for org in [o.id for o in source.orgs()]:
+            for lookup, records, field in lookups:
+                scan = [r for r in records if r.org_id == org and start <= getattr(r, field) < end]
+                assert lookup(org, start, end) == scan

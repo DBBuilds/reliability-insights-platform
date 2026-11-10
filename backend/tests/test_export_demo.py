@@ -25,11 +25,24 @@ def test_windows_are_the_complete_days_before_the_snapshot():
     ]
 
 
+def test_months_are_the_complete_months_inside_the_data():
+    # frontend/src/window.test.ts pins the same first and last month.
+    months = export_demo.months(demo_data.START, demo_data.END)
+    assert (months[0], months[-1], len(months)) == (date(2024, 11, 1), date(2026, 9, 1), 23)
+
+
+def test_month_windows_cover_every_range_of_up_to_12_months():
+    windows = export_demo.month_windows(export_demo.months(demo_data.START, demo_data.END))
+    assert len(windows) == 12 * 12 + sum(range(1, 12))  # 210: 12 lengths from each of the first 12 starts, fewer after
+    assert {"start": "2025-01-01", "end": "2025-04-01", "previousStart": "2024-10-03"} in windows
+    assert all((date.fromisoformat(w["end"]) - date.fromisoformat(w["start"])).days <= 366 for w in windows)
+
+
 def test_exports_every_frontend_operation_for_every_org_and_window(tmp_path):
     written = export_demo.export(tmp_path)
     operations = json.loads(export_demo.OPERATIONS.read_text()).values()
     assert {k.split("/")[0] for k in written} == {parse(text).definitions[0].name.value for text in operations}
-    assert len(written) == 1 + 6 * 4  # Orgs, plus 6 orgs x 4 windows
+    assert len(written) == 1 + 6 * (4 + 210)  # Orgs, plus 6 orgs x (4 presets + 210 month ranges)
     eng = json.loads((tmp_path / "OrgMetrics/2026-10-26_eng_2026-04-29_2026-07-28.json").read_text())
     source = FixtureSource(demo_data.TARGET)
     api = InsightsService(source, now=source.as_of).report("eng", date(2026, 7, 28), date(2026, 10, 26))

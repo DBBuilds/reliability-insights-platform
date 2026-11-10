@@ -51,3 +51,49 @@ export function customRange(from: string, to: string, today: Date = new Date()):
   }
   return window(start, last + DAY);
 }
+
+// Whole-month custom ranges for the static demo, which can only answer what its exporter precomputed.
+export const MAX_MONTHS = 12;
+export const DEMO_HISTORY_DAYS = 2 * 366; // the demo data's span (backend demo_data.START)
+const monthOf = (ms: number) => iso(ms).slice(0, 7);
+const nextMonth = (ms: number) => {
+  const d = new Date(ms);
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
+};
+
+/** "YYYY-MM" of each calendar month wholly inside the demo data, like the exporter's months(). */
+export function demoMonths(asOf: Date): string[] {
+  const end = utcDay(asOf);
+  const start = end - DEMO_HISTORY_DAYS * DAY;
+  let month = new Date(start).getUTCDate() === 1 ? start : nextMonth(start);
+  const out: string[] = [];
+  while (nextMonth(month) <= end) {
+    out.push(monthOf(month));
+    month = nextMonth(month);
+  }
+  return out;
+}
+
+/** Inclusive first and last dates of the months `from` to `to` ("YYYY-MM"), or what's wrong. */
+export function monthRange(from: string, to: string): { from: string; to: string } | string {
+  const [first, last] = [parseDay(`${from}-01`), parseDay(`${to}-01`)];
+  if (first == null || last == null) return "Pick both months.";
+  if (first > last) return "The start must be on or before the end.";
+  const [a, b] = [new Date(first), new Date(last)];
+  if ((b.getUTCFullYear() - a.getUTCFullYear()) * 12 + b.getUTCMonth() - a.getUTCMonth() + 1 > MAX_MONTHS) {
+    return `Pick ${MAX_MONTHS} months or fewer.`;
+  }
+  return { from: iso(first), to: iso(nextMonth(last) - DAY) };
+}
+
+/** Whether the demo has data for this range: whole months it lists, at most MAX_MONTHS. */
+export function isDemoRange(from: string, to: string, months: string[]): boolean {
+  const range = monthRange(from.slice(0, 7), to.slice(0, 7));
+  return (
+    typeof range !== "string" &&
+    range.from === from &&
+    range.to === to &&
+    months.includes(from.slice(0, 7)) &&
+    months.includes(to.slice(0, 7))
+  );
+}

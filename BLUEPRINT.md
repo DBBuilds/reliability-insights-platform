@@ -61,7 +61,8 @@ Conventions for every metric:
 - **Fixed windows `[start, end)` with explicit dates.** Windows anchored to the
   moment of reading move between two reads and manufacture fake changes. The UI
   offers the last 30, 90, 180, or 365 complete UTC days (default 30), or a custom
-  range of up to 366 days; the previous period is the same length just before.
+  range of up to 366 days (whole months, up to 12, on the static demo, which can
+  only answer what it precomputed); the previous period is the same length just before.
 - **Edge weeks are flagged partial.** They always understate: weekly counts fade
   them, sparklines leave them out; compare complete weeks.
 - **Percent change needs a minimum sample, a minimum delta, and for medians a rank

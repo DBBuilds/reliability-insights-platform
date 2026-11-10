@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+from bisect import bisect_left
+from collections.abc import Callable
 from datetime import UTC, date, datetime
 from pathlib import Path
 
@@ -23,8 +25,23 @@ def _dt(value: str | None) -> datetime | None:
     return ts
 
 
-def _in(ts: datetime, start: datetime, end: datetime) -> bool:
-    return start <= ts < end
+class _ByOrg:
+    """Records per org, sorted by time, so a window is two binary searches instead of a scan.
+
+    A window comes back in file order, as a scan would return it (ties in counts keep their order).
+    """
+
+    def __init__(self, records: list, when: Callable) -> None:
+        self._rows: dict[str, list] = {}
+        for n, r in enumerate(records):
+            self._rows.setdefault(r.org_id, []).append((when(r), n, r))
+        for rows in self._rows.values():
+            rows.sort(key=lambda row: (row[0], row[1]))
+
+    def window(self, org_id: str, start: datetime, end: datetime) -> list:
+        rows = self._rows.get(org_id, [])
+        lo, hi = (bisect_left(rows, t, key=lambda row: row[0]) for t in (start, end))
+        return [r for _, _, r in sorted(rows[lo:hi], key=lambda row: row[1])]
 
 
 class FixtureSource:
@@ -62,6 +79,12 @@ class FixtureSource:
             )
             for s in raw["support_requests"]
         ]
+        self._by_org = {
+            "incidents": _ByOrg(self._incidents, lambda i: i.started_at),
+            "deploys": _ByOrg(self._deploys, lambda d: d.deployed_at),
+            "pages": _ByOrg(self._pages, lambda p: p.fired_at),
+            "support": _ByOrg(self._support, lambda s: s.opened_at),
+        }
         self._slos = [Slo(**s) for s in raw.get("slos", [])]
         self._sli = [SliDaily(**{**d, "day": date.fromisoformat(d["day"])}) for d in raw.get("sli_daily", [])]
         self._coverage = {k: {s: _dt(t) for s, t in v.items()} for k, v in raw.get("coverage", {}).items()}
@@ -70,16 +93,16 @@ class FixtureSource:
         return list(self._orgs)
 
     def incidents(self, org_id, start, end):
-        return [i for i in self._incidents if i.org_id == org_id and _in(i.started_at, start, end)]
+        return self._by_org["incidents"].window(org_id, start, end)
 
     def deploys(self, org_id, start, end):
-        return [d for d in self._deploys if d.org_id == org_id and _in(d.deployed_at, start, end)]
+        return self._by_org["deploys"].window(org_id, start, end)
 
     def pages(self, org_id, start, end):
-        return [p for p in self._pages if p.org_id == org_id and _in(p.fired_at, start, end)]
+        return self._by_org["pages"].window(org_id, start, end)
 
     def support_requests(self, org_id, start, end):
-        return [s for s in self._support if s.org_id == org_id and _in(s.opened_at, start, end)]
+        return self._by_org["support"].window(org_id, start, end)
 
     def slos(self, org_id):
         return [s for s in self._slos if s.org_id == org_id]

@@ -7,7 +7,7 @@ import { ORGS } from "./queries";
 import { demoAsOf } from "./demo";
 import { urlForView, type View, viewFromUrl } from "./url";
 import { WindowPicker } from "./WindowPicker";
-import { customRange, lastDayOf, lastDays, latestDay } from "./window";
+import { customRange, demoMonths, isDemoRange, lastDayOf, lastDays, latestDay } from "./window";
 
 /** Orgs in tree order, each with its depth, so the picker can indent children under parents. */
 export function orgTree(orgs: OrgsQuery["orgs"]): { id: string; name: string; depth: number }[] {
@@ -43,11 +43,14 @@ export function App() {
       `${window.location.pathname}${urlForView(next)}`,
     );
   };
-  // The static demo answers its presets only; with the API, a valid custom range wins over the preset.
+  // A valid custom range wins over the preset. The static demo can answer only the whole-month ranges it
+  // exported, so any other range in a link falls back to the preset there.
   // Demo data stops at its snapshot, so both demo modes count windows back from it (`make demo` sets VITE_AS_OF).
   const pinned = demoAsOf || import.meta.env.VITE_AS_OF;
   const today = pinned ? new Date(pinned) : new Date();
-  const range = !demoAsOf && view.from && view.to ? customRange(view.from, view.to, today) : null;
+  const months = demoAsOf ? demoMonths(today) : undefined;
+  const answerable = view.from && view.to && (!months || isDemoRange(view.from, view.to, months));
+  const range = answerable ? customRange(view.from, view.to, today) : null;
   const current = range && typeof range !== "string" ? range : lastDays(view.days, today);
   const { start, end, previousStart } = current;
   const tree = orgTree(data?.orgs ?? []);
@@ -68,7 +71,7 @@ export function App() {
             ))}
           </select>
         </label>
-        <WindowPicker view={view} window={current} latest={latestDay(today)} allowCustom={!demoAsOf} onChange={go} />
+        <WindowPicker view={view} window={current} latest={latestDay(today)} months={months} onChange={go} />
         <span className="muted">{dateRange(start, lastDayOf(current))}, UTC</span>
         {demoAsOf && <strong>Demo with synthetic data</strong>}
       </header>

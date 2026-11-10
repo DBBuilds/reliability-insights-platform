@@ -10,7 +10,7 @@ computed every number at build time from 24 months of seeded records.
 
 - The header says **Jul 28 to Oct 25, 2026, UTC**: complete days with fixed dates, so
   the numbers don't drift between two reads. The window menu offers 30, 90, 180, and
-  365 days; with the API (`make demo`) it also takes a custom range.
+  365 days, or a custom range: whole months here, any dates with the API (`make demo`).
 - The freshness row marks **support: stale since Oct 14**. A source that stopped
   syncing reads as stale, never as a quiet zero.
 - **Insights** come first: what needs attention, each needing a minimum sample and
