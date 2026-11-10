@@ -13,7 +13,7 @@ from insights import demo_data as demo
 from insights.service import InsightsService
 from insights.sources.fixtures import FixtureSource
 
-QUARTER = (demo.END - timedelta(weeks=13), demo.END)
+QUARTER = (demo.END - timedelta(days=90), demo.END)  # the dashboard's 90-day preset
 TEAMS = [t.id for t in demo.TEAMS]
 
 
@@ -51,6 +51,8 @@ def test_checkout_risky_release_raises_failures_and_sev2s(service):
     before = service.report("checkout", start - (end - start), start)
     assert risky.change_failure_rate >= 0.2 and risky.change_failure_rate >= 2.5 * before.change_failure_rate
     assert risky.by_severity["SEV2"] >= 3 * max(1, before.by_severity["SEV2"])
+    usual = service.report("checkout", start - timedelta(days=90), start)  # enough incidents for a median
+    assert risky.ttr.median_minutes >= 2 * usual.ttr.median_minutes  # and they take longer to fix
 
 
 def test_payments_cuts_time_to_resolve(service):
@@ -86,7 +88,7 @@ def test_the_quarter_view_tells_the_story_and_nothing_else(service):
     expected = {
         "eng": ["stale-data", "off-hours-pages", "error-budget:identity-auth"],
         "payments": ["mttr-trend"],
-        "checkout": ["mttr-trend", "cfr-spike"],
+        "checkout": ["cfr-spike"],
         "search": ["stale-data", "noisy-alert", "off-hours-pages"],
         "identity": ["error-budget:identity-auth"],
         "platform": ["noisy-alert", "off-hours-pages"],

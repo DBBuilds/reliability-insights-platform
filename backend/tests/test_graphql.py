@@ -130,7 +130,7 @@ def test_trends_dora_slos_and_children_over_http():
         "slis": False,
     }
     lead = m["delivery"]["leadTime"]
-    assert lead["value"] < 24 * 60 and lead["levels2024"] == ["ELITE"]  # median under a day
+    assert 24 * 60 <= lead["value"] < 7 * 24 * 60 and lead["levels2024"] == ["HIGH"]  # one day to one week
     assert [s["id"] for s in m["slos"]] == sorted(f"{t.id}-{t.services[0]}" for t in demo.TEAMS)
 
 

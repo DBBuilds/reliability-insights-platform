@@ -1,10 +1,10 @@
-"""Generate data/demo.json: 26 weeks of synthetic data that tell a story.  Run: make demo-data
+"""Generate data/demo.json: 24 months of synthetic data that tell a story.  Run: make demo-data
 
 Same seed, same bytes: tests/test_demo_data.py fails if the committed file drifts from
 this generator, and asserts each story beat through the real service:
 
-1. Checkout ships a risky release mid-quarter: change failure rate jumps, SEV2s cluster.
-2. Payments cuts its median time to resolve steadily across the half year.
+1. Checkout ships a risky release mid-quarter: change failure rate jumps, SEV2s cluster, and they take longer to fix.
+2. Payments cuts its median time to resolve steadily across the last half year.
 3. Search's on-call is paged at night far more than other teams.
 4. One Platform alert dominates its pages and is rarely actionable.
 5. Identity's login SLO burns most of its error budget early in the 30-day window.
@@ -27,7 +27,8 @@ from zoneinfo import ZoneInfo
 SEED = 2026
 AS_OF = datetime(2026, 10, 26, 6, 0, tzinfo=UTC)  # snapshot time: Monday morning, after the nightly syncs
 END = AS_OF.date()
-START = END - timedelta(weeks=26)  # records cover [START, END)
+START = END - timedelta(days=2 * 366)  # records cover [START, END): the longest window and the one before it
+IMPROVING_FROM = END - timedelta(weeks=26)  # Payments' time to resolve falls from here
 RISKY_RELEASE = (date(2026, 9, 7), date(2026, 9, 28))  # Checkout, weeks 7 to 9 of the last quarter
 SUPPORT_STOPPED = END - timedelta(days=12)  # Search's support sync
 TARGET = Path(__file__).resolve().parents[2] / "data" / "demo.json"
@@ -170,8 +171,11 @@ def _team_data(rng: random.Random, team: Team) -> dict[str, list[dict]]:
 def _incident(rng: random.Random, team: Team, start: datetime, deploy: dict | None, risky: bool) -> dict:
     weights = RISKY_SEVERITY_WEIGHTS if risky else SEVERITY_WEIGHTS
     resolve = team.resolve_minutes
-    if team.id == "payments":  # steady improvement: from 300 minutes at START to 60 at END
-        resolve = 300 - 240 * (start.astimezone(UTC).date() - START).days / (END - START).days
+    if team.id == "payments":  # 300 minutes, then a steady fall to 60 over the last 26 weeks
+        progress = max(0, (start.astimezone(UTC).date() - IMPROVING_FROM).days) / (END - IMPROVING_FROM).days
+        resolve = 300 - 240 * progress
+    if risky:  # a bad release's incidents take longer to untangle
+        resolve *= 2.5
     service = deploy["service"] if deploy else rng.choice(team.services)
     return {
         "id": "",

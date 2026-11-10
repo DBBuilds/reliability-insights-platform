@@ -4,18 +4,18 @@ A reliability dashboard for engineering teams and their leaders: DORA delivery
 metrics, incidents, on-call load, SLO error budgets, and team comparisons, with
 rule-based insights and data-freshness checks.
 
-**[Live demo](https://dbbuilds.github.io/reliability-insights-platform/)**: 26 weeks
+**[Live demo](https://dbbuilds.github.io/reliability-insights-platform/)**: 24 months
 of synthetic data for five teams. The real backend computes every number at build
 time; the page is static. **[A 5-minute tour](docs/tour.md)** shows what to click.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/dashboard-dark.png">
-  <img src="docs/images/dashboard-light.png" width="800" alt="The dashboard for Engineering over the last 13 weeks: a freshness row with a stale support source, two insights, DORA tiles with 2024 levels, and weekly reliability charts.">
+  <img src="docs/images/dashboard-light.png" width="800" alt="The dashboard for Engineering over the last 90 days: a freshness row with a stale support source, two insights, DORA tiles with 2024 levels, and weekly reliability charts.">
 </picture>
 
 ## What to look for in the demo
 
-Pick **Engineering** and **Last 13 complete weeks**, then open each team from the
+Pick **Engineering** and **Last 90 days**, then open each team from the
 Teams table, or follow the [tour](docs/tour.md).
 
 | Team | Story | Where it shows |
@@ -77,7 +77,7 @@ make demo    # API on the demo data plus the UI: http://localhost:5173
 
 - **Too few samples is null, never 0.** Open items are counted, not dropped.
 - **A source that stopped syncing shows as stale,** never as a confident zero.
-- **Windows are fixed dates** (complete ISO weeks), so numbers don't drift between reads.
+- **Windows are fixed dates** (complete UTC days), so numbers don't drift between reads.
 - **New schema fields are nullable,** and a frontend query selects a new field only
   after the backend serving it is live. Tests and CI enforce the contract.
 - **Every metric definition has a test that failed before it changed.**
@@ -88,7 +88,7 @@ Contributor rules are in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 | Platform | Date | Versions |
 |---|---|---|
-| macOS 26.7 (Intel, x86_64) | 2026-10-31 | uv 0.13.1, Node 22.22.2, Python 3.12.15 |
+| macOS 26.7 (Intel, x86_64) | 2026-11-08 | uv 0.13.1, Node 22.22.2, Python 3.12.15 |
 | Linux (GitHub Actions, ubuntu-latest) | Every push and PR | Python 3.12.3, Node 22.23.4 |
 | macOS (Apple Silicon) | 2026-10-14, earlier version | Not re-verified since |
 

@@ -15,7 +15,7 @@ from enum import Enum
 
 import strawberry
 from graphql import GraphQLError
-from strawberry.extensions import MaskErrors, MaxAliasesLimiter
+from strawberry.extensions import MaskErrors, MaxAliasesLimiter, ParserCache
 from strawberry.types import Info
 
 from insights import metrics as m
@@ -375,5 +375,8 @@ schema = strawberry.Schema(
     extensions=[
         lambda: MaxAliasesLimiter(max_alias_count=10),
         lambda: MaskErrors(should_mask_error=_is_unexpected),
+        # The dashboard sends the same few documents over and over: parse each once. (A ValidationCache
+        # would never hit: its key includes the alias limiter's rule, which is created per request.)
+        lambda: ParserCache(maxsize=100),
     ],
 )

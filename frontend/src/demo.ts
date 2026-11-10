@@ -2,7 +2,7 @@
 // exporter wrote (backend/src/insights/export_demo.py), so the demo needs no server.
 import { ApolloLink } from "@apollo/client";
 import { from } from "rxjs";
-import { PRESETS } from "./window";
+import { MAX_MONTHS, PRESETS } from "./window";
 
 /** Set at build time by `make demo-build`; the snapshot the demo data was taken at. */
 export const demoAsOf: string | undefined = import.meta.env.VITE_DEMO_AS_OF || undefined;
@@ -18,7 +18,7 @@ export function demoKey(operation: string, variables: Record<string, unknown>): 
 const missing = {
   errors: [
     {
-      message: `This demo has no data for that choice. It covers the orgs in the menu over the last ${PRESETS.join(", ").replace(/, (\d+)$/, ", or $1")} complete weeks.`,
+      message: `This demo has no data for that choice. It covers the orgs in the menu over the last ${PRESETS.join(", ").replace(/, (\d+)$/, ", or $1")} days, or whole months, up to ${MAX_MONTHS}.`,
     },
   ],
 };

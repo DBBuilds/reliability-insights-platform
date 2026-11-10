@@ -17,6 +17,7 @@ type ChartProps = {
   height?: number;
   endLabel?: boolean; // value at the end of each line; off when the text beside the chart already says it
   tickUnit?: number; // round ticks in this unit, e.g. 60 for minutes shown as hours
+  faded?: boolean[]; // columns to fade, such as partial edge weeks that undercount
 };
 
 /** Ticks: zero (or the minimum), the middle, and a round top, rounded in `unit`. */
@@ -38,6 +39,7 @@ export function Chart({
   height = 150,
   endLabel = true,
   tickUnit,
+  faded,
 }: ChartProps) {
   const [active, setActive] = useState<number | null>(null);
   const known = [...series.flatMap((s) => s.values), ...(band?.high ?? [])].filter((v): v is number => v != null);
@@ -147,6 +149,7 @@ export function Chart({
                     <path
                       key={i}
                       fill={s.color}
+                      opacity={faded?.[i] ? 0.4 : undefined}
                       d={`M${x0},${base}V${y0 + r}Q${x0},${y0} ${x0 + r},${y0}H${x1 - r}Q${x1},${y0} ${x1},${y0 + r}V${base}Z`}
                     />
                   );

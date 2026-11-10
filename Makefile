@@ -16,7 +16,7 @@ web:                   ## frontend on :5173, proxies /graphql to :8000
 
 demo:                  ## API on the demo data plus the UI, in one terminal; Ctrl-C stops both
 	@(cd backend && INSIGHTS_DATA=data/demo.json exec uv run uvicorn insights.app:app --port 8000 --app-dir src) & \
-	trap 'kill $$! 2>/dev/null' EXIT; cd frontend && npm run dev
+	trap 'kill $$! 2>/dev/null' EXIT; cd frontend && VITE_AS_OF=$(AS_OF) npm run dev
 
 BASE ?= /
 AS_OF = $(shell cd backend && uv run python -c 'from insights.demo_data import AS_OF; print(AS_OF.isoformat())')

@@ -1,5 +1,4 @@
-import { change, dateTime, doraLevels, minutes, objective, percent, perDay, shortDate } from "./format";
-import { completeWeeks } from "./window";
+import { change, dateRange, dateTime, doraLevels, minutes, objective, percent, perDay, shortDate } from "./format";
 
 test("minutes formats and says when there is too little data", () => {
   expect(minutes(null)).toBe("Not enough data");
@@ -45,13 +44,7 @@ test("dates read in UTC", () => {
   expect(shortDate("2026-10-05")).toBe("Oct 5");
 });
 
-test("completeWeeks ends on the Monday of the current week", () => {
-  // Wednesday 2026-10-14 -> window Sep 14 to Oct 12, previous window starts Aug 17
-  expect(completeWeeks(4, new Date("2026-10-14T15:00:00Z"))).toEqual({
-    start: "2026-09-14",
-    end: "2026-10-12",
-    previousStart: "2026-08-17",
-  });
-  // A Monday is itself the end of the last complete week
-  expect(completeWeeks(1, new Date("2026-10-12T00:30:00Z"))).toMatchObject({ start: "2026-10-05", end: "2026-10-12" });
+test("dateRange shows the year once, or twice when the range crosses years", () => {
+  expect(dateRange("2026-09-26", "2026-10-25")).toBe("Sep 26 to Oct 25, 2026");
+  expect(dateRange("2025-10-26", "2026-10-25")).toBe("Oct 26, 2025 to Oct 25, 2026");
 });

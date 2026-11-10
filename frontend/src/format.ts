@@ -42,6 +42,14 @@ export function dateTime(iso: string): string {
   return `${day}, ${d.toISOString().slice(11, 16)} UTC`;
 }
 
+/** "Sep 26 to Oct 25, 2026", or with both years when the range crosses one. Inclusive ISO dates. */
+export function dateRange(first: string, last: string): string {
+  const [fy, ly] = [first.slice(0, 4), last.slice(0, 4)];
+  return fy === ly
+    ? `${shortDate(first)} to ${shortDate(last)}, ${ly}`
+    : `${shortDate(first)}, ${fy} to ${shortDate(last)}, ${ly}`;
+}
+
 /** "Oct 5" from "2026-10-05". */
 export function shortDate(isoDate: string): string {
   return new Date(`${isoDate}T00:00:00Z`).toLocaleDateString("en-US", {

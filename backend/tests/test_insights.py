@@ -3,14 +3,19 @@ from insights.metrics import DurationStat
 
 
 def test_mttr_trend_needs_a_real_change():
-    assert rules.mttr_trend(DurationStat(5, 110, 200), DurationStat(5, 100, 180)) is None
-    worse = rules.mttr_trend(DurationStat(5, 150, 300), DurationStat(5, 100, 180))
+    assert rules.mttr_trend(DurationStat(5, 110, 200), DurationStat(5, 100, 180), p_value=0.01) is None  # +10%
+    worse = rules.mttr_trend(DurationStat(5, 150, 300), DurationStat(5, 100, 180), p_value=0.01)
     assert worse.level == rules.InsightLevel.WARNING and "up 50%" in worse.title
 
 
+def test_mttr_trend_ignores_a_change_chance_explains():
+    # Medians of heavy-tailed durations move 25% by chance about half the time; the rank test filters that.
+    assert rules.mttr_trend(DurationStat(12, 150, 300), DurationStat(12, 100, 180), p_value=0.2) is None
+
+
 def test_mttr_trend_is_silent_without_enough_samples():
-    assert rules.mttr_trend(DurationStat(2, None, None), DurationStat(5, 100, 180)) is None
-    assert rules.mttr_trend(DurationStat(4, 165, 286), DurationStat(5, 100, 180)) is None  # 4 resolved: too few
+    assert rules.mttr_trend(DurationStat(2, None, None), DurationStat(5, 100, 180), p_value=0.01) is None
+    assert rules.mttr_trend(DurationStat(4, 165, 286), DurationStat(5, 100, 180), p_value=0.01) is None  # 4: too few
 
 
 def test_noisy_alert_needs_volume_and_a_majority_of_pages():

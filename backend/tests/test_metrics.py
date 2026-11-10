@@ -175,3 +175,15 @@ def test_slo_status_burning_and_exhausted():
 def test_slo_without_data_is_null_not_zero():
     r = m.slo_result(Slo("s", "o", "api", objective=0.99, window_days=30), [], end=date(2026, 10, 5))
     assert (r.attainment, r.budget_remaining, r.status, r.daily) == (None, None, None, [])
+
+
+def test_rank_test_matches_a_hand_calculation():
+    # U = 0, mean 12.5, sd = sqrt(25 * 11 / 12) = 4.787, z = 2.611, two-sided p = 0.0090
+    assert round(m.rank_test_p([1, 2, 3, 4, 5], [6, 7, 8, 9, 10]), 4) == 0.009
+    assert m.rank_test_p([1, 2, 3], [1, 2, 3]) == 1.0
+    assert m.rank_test_p([5, 5], [5, 5]) == 1.0  # all tied: no evidence of a difference
+    assert m.rank_test_p([], [1, 2]) is None
+
+
+def test_resolve_minutes_lists_resolved_durations_only():
+    assert m.resolve_minutes([inc(1, resolve=30), inc(2, resolve=None), inc(3, resolve=90)]) == [30, 90]

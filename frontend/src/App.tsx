@@ -1,12 +1,13 @@
 import { useQuery } from "@apollo/client/react";
 import { useEffect, useState } from "react";
 import { Dashboard } from "./Dashboard";
-import { shortDate } from "./format";
+import { dateRange } from "./format";
 import type { OrgsQuery } from "./gql/graphql";
 import { ORGS } from "./queries";
 import { demoAsOf } from "./demo";
 import { urlForView, type View, viewFromUrl } from "./url";
-import { completeWeeks, PRESETS } from "./window";
+import { WindowPicker } from "./WindowPicker";
+import { customRange, demoMonths, isDemoRange, lastDayOf, lastDays, latestDay } from "./window";
 
 /** Orgs in tree order, each with its depth, so the picker can indent children under parents. */
 export function orgTree(orgs: OrgsQuery["orgs"]): { id: string; name: string; depth: number }[] {
@@ -34,12 +35,26 @@ export function App() {
   const go = (change: Partial<View>) => {
     const next = { ...view, ...change };
     setView(next);
-    window.history.pushState(null, "", `${window.location.pathname}${urlForView(next)}`);
+    // Adjusting a custom range replaces the entry, so Back doesn't step through every keystroke.
+    const editingRange = Boolean(view.from && view.to && next.from && next.to && next.org === view.org);
+    window.history[editingRange ? "replaceState" : "pushState"](
+      null,
+      "",
+      `${window.location.pathname}${urlForView(next)}`,
+    );
   };
-  const { start, end, previousStart } = completeWeeks(view.weeks, demoAsOf ? new Date(demoAsOf) : undefined);
+  // A valid custom range wins over the preset. The static demo can answer only the whole-month ranges it
+  // exported, so any other range in a link falls back to the preset there.
+  // Demo data stops at its snapshot, so both demo modes count windows back from it (`make demo` sets VITE_AS_OF).
+  const pinned = demoAsOf || import.meta.env.VITE_AS_OF;
+  const today = pinned ? new Date(pinned) : new Date();
+  const months = demoAsOf ? demoMonths(today) : undefined;
+  const answerable = view.from && view.to && (!months || isDemoRange(view.from, view.to, months));
+  const range = answerable ? customRange(view.from, view.to, today) : null;
+  const current = range && typeof range !== "string" ? range : lastDays(view.days, today);
+  const { start, end, previousStart } = current;
   const tree = orgTree(data?.orgs ?? []);
   const selected = view.org || tree[0]?.id || "";
-  const lastDay = new Date(Date.parse(`${end}T00:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
 
   return (
     <main>
@@ -56,19 +71,8 @@ export function App() {
             ))}
           </select>
         </label>
-        <label>
-          Window{" "}
-          <select value={view.weeks} onChange={(e) => go({ weeks: Number(e.target.value) })}>
-            {PRESETS.map((w) => (
-              <option key={w} value={w}>
-                Last {w} complete weeks
-              </option>
-            ))}
-          </select>
-        </label>
-        <span className="muted">
-          {shortDate(start)} to {shortDate(lastDay)}, UTC
-        </span>
+        <WindowPicker view={view} window={current} latest={latestDay(today)} months={months} onChange={go} />
+        <span className="muted">{dateRange(start, lastDayOf(current))}, UTC</span>
         {demoAsOf && <strong>Demo with synthetic data</strong>}
       </header>
       {error && <p role="alert">Could not load orgs: {error.message}</p>}
